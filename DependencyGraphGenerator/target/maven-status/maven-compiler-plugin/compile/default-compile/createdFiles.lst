@@ -1,3 +1,6 @@
+com/example/DependencyGraphGenerator$InterfaceVisitor.class
+com/example/DependencyGraphGenerator$EnumVisitor.class
 com/example/DependencyGraphGenerator$1.class
 com/example/DependencyGraphGenerator$ClassVisitor.class
+com/example/DependencyGraphGenerator$AnnotationVisitor.class
 com/example/DependencyGraphGenerator.class

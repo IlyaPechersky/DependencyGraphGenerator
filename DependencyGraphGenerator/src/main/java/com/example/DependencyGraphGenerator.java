@@ -2,27 +2,26 @@ package com.example;
 
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.CompilationUnit;
-import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
+import com.github.javaparser.ast.body.*;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.SimpleDirectedGraph;
+import org.jgrapht.graph.DefaultDirectedGraph;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.*;
+import java.util.*;
+import java.util.stream.Collectors;
+
 
 public class DependencyGraphGenerator {
-
-    private Graph<String, DefaultEdge> graph = new SimpleDirectedGraph<>(DefaultEdge.class);
-    private Map<String, Set<String>> dependencies = new HashMap<>();
+    private Graph<String, DefaultEdge> graph = new DefaultDirectedGraph<>(DefaultEdge.class);
+    private Map<String, String> nodeTypes = new HashMap<>();
+    private Map<DefaultEdge, String> edgeTypes = new HashMap<>();
 
     public void parseDirectory(String directoryPath) throws IOException {
         Files.walk(Paths.get(directoryPath))
@@ -33,50 +32,195 @@ public class DependencyGraphGenerator {
 
     private void parseFile(File file) {
         try {
-            // Create an instance of JavaParser
             CompilationUnit cu = new JavaParser().parse(file).getResult().orElse(null);
             if (cu != null) {
-                cu.accept(new ClassVisitor(), null);
+                new ClassVisitor().visit(cu, null);
+                new EnumVisitor().visit(cu, null);
+                new AnnotationVisitor().visit(cu, null);
+                new InterfaceVisitor().visit(cu, null);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    private String getRawType(String typeName) {
+        return typeName
+            .replaceAll("<.*>", "") // Удаляем generics
+            .replaceAll("\\[\\]", "") // Удаляем массивы
+            .replaceAll("@.*", "") // Удаляем аннотации
+            .trim();
+    }
+
+    private void addNode(String name, String type) {
+        // Пропускаем примитивные типы и void
+        if (name == null || name.isEmpty() || 
+            name.matches("^(boolean|byte|char|short|int|long|float|double|void)$")) {
+            return;
+        }
+        
+        if (!graph.containsVertex(name)) {
+            graph.addVertex(name);
+            nodeTypes.put(name, type);
+        }
+    }
+
+    private void addEdge(String source, String target, String edgeType) {
+        if (source.equals(target) || 
+            source.contains(".") || // Пропускаем FQN
+            target.contains(".") ||
+            !isProjectClass(target)) {
+            return;
+        }
+
+        // Пропускаем петли и зависимости на примитивные типы
+        if (source.equals(target) || !graph.containsVertex(source) || !graph.containsVertex(target)) {
+            return;
+        }
+        
+        DefaultEdge edge = graph.addEdge(source, target);
+        if (edge != null) {
+            edgeTypes.put(edge, edgeType);
+        }
+    }
+
+    private boolean isProjectClass(String className) {
+        // Реализуйте проверку принадлежности класса к проекту
+        return !className.matches("^(java|javax|sun|com.sun).*");
+    }
+
     private class ClassVisitor extends VoidVisitorAdapter<Void> {
         @Override
         public void visit(ClassOrInterfaceDeclaration n, Void arg) {
-            String className = n.getNameAsString();
-            graph.addVertex(className);
-            dependencies.putIfAbsent(className, new HashSet<>());
+            if (n.isInterface()) return;
 
-            // Find dependencies (extends, implements)
+            String className = n.getNameAsString();
+            addNode(className, "class");
+
+            // Inheritance
             n.getExtendedTypes().forEach(type -> {
-                String dependency = type.getNameAsString();
-                graph.addVertex(dependency);
-                graph.addEdge(className, dependency);
-                dependencies.get(className).add(dependency);
+                String parent = getRawType(type.getNameAsString());
+                addNode(parent, "class");
+                addEdge(className, parent, "extends");
+            });
+
+            // Implementations
+            n.getImplementedTypes().forEach(type -> {
+                String interfaceName = getRawType(type.getNameAsString());
+                addNode(interfaceName, "interface");
+                addEdge(className, interfaceName, "implements");
+            });
+
+            // Fields
+            n.getFields().forEach(field -> {
+                field.getVariables().forEach(variable -> {
+                    String fieldType = getRawType(variable.getTypeAsString());
+                    addNode(fieldType, "unknown");
+                    addEdge(className, fieldType, "field");
+                });
+            });
+
+            // Methods
+            n.getMethods().forEach(method -> {
+                // Return type
+                if (method.getType() != null) {
+                    String returnType = getRawType(method.getType().toString());
+                    addNode(returnType, "unknown");
+                    addEdge(className, returnType, "method_return");
+                }
+
+                // Parameters
+                method.getParameters().forEach(param -> {
+                    String paramType = getRawType(param.getType().asString());
+                    addNode(paramType, "unknown");
+                    addEdge(className, paramType, "method_parameter");
+                });
+            });
+
+            // Annotations
+            n.getAnnotations().forEach(annotation -> {
+                String annotationType = getRawType(annotation.getNameAsString());
+                addNode(annotationType, "annotation");
+                addEdge(className, annotationType, "class_annotation");
             });
 
             super.visit(n, arg);
         }
     }
 
-    public String outputGraphAsJson() {
-        Map<String, Object> jsonOutput = new HashMap<>();
-        jsonOutput.put("nodes", graph.vertexSet());
-        jsonOutput.put("edges", graph.edgeSet());
+    private class InterfaceVisitor extends VoidVisitorAdapter<Void> {
+        @Override
+        public void visit(ClassOrInterfaceDeclaration n, Void arg) {
+            if (!n.isInterface()) return;
 
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        return gson.toJson(jsonOutput);
+            String interfaceName = n.getNameAsString();
+            addNode(interfaceName, "interface");
+
+            // Interface extends
+            n.getExtendedTypes().forEach(type -> {
+                String parentInterface = getRawType(type.getNameAsString());
+                addNode(parentInterface, "interface");
+                addEdge(interfaceName, parentInterface, "extends");
+            });
+        }
+    }
+
+    private class EnumVisitor extends VoidVisitorAdapter<Void> {
+        @Override
+        public void visit(EnumDeclaration n, Void arg) {
+            String enumName = n.getNameAsString();
+            addNode(enumName, "enum");
+
+            // Implemented interfaces
+            n.getImplementedTypes().forEach(type -> {
+                String interfaceName = getRawType(type.getNameAsString());
+                addNode(interfaceName, "interface");
+                addEdge(enumName, interfaceName, "implements");
+            });
+        }
+    }
+
+    private class AnnotationVisitor extends VoidVisitorAdapter<Void> {
+        @Override
+        public void visit(AnnotationDeclaration n, Void arg) {
+            String annotationName = n.getNameAsString();
+            addNode(annotationName, "annotation");
+        }
+    }
+
+    public String outputGraphAsJson() {
+        List<Map<String, String>> nodes = graph.vertexSet().stream()
+                .map(v -> {
+                    Map<String, String> node = new HashMap<>();
+                    node.put("id", v);
+                    node.put("type", nodeTypes.getOrDefault(v, "unknown"));
+                    return node;
+                })
+                .collect(Collectors.toList());
+
+        List<Map<String, String>> edges = graph.edgeSet().stream()
+                .map(e -> {
+                    Map<String, String> edge = new HashMap<>();
+                    edge.put("source", graph.getEdgeSource(e));
+                    edge.put("target", graph.getEdgeTarget(e));
+                    edge.put("type", edgeTypes.getOrDefault(e, "unknown"));
+                    return edge;
+                })
+                .collect(Collectors.toList());
+
+        Map<String, Object> json = new HashMap<>();
+        json.put("nodes", nodes);
+        json.put("edges", edges);
+
+        return new GsonBuilder().setPrettyPrinting().create().toJson(json);
     }
 
     public static void main(String[] args) {
         DependencyGraphGenerator generator = new DependencyGraphGenerator();
         try {
             generator.parseDirectory("/Users/i-pechersky/VSCProjects/Parser/examples/PetClinic/spring-petclinic-microservices"); // Change this to your directory
-            String jsonOutput = generator.outputGraphAsJson();
-            System.out.println(jsonOutput);
+            String json = generator.outputGraphAsJson();
+            Files.write(Paths.get("outputGraph.txt"), json.getBytes(StandardCharsets.UTF_8));
         } catch (IOException e) {
             e.printStackTrace();
         }
