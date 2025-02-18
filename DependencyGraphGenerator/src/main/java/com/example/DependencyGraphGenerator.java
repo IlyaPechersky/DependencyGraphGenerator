@@ -4,8 +4,14 @@ import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.*;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
+import com.google.gson.JsonSerializer;
+import com.google.gson.JsonPrimitive;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import org.jgrapht.alg.cycle.CycleDetector;
+import org.jgrapht.alg.scoring.BetweennessCentrality;
+import org.jgrapht.alg.scoring.PageRank;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DefaultDirectedGraph;
@@ -85,7 +91,6 @@ public class DependencyGraphGenerator {
     }
 
     private boolean isProjectClass(String className) {
-        // Реализуйте проверку принадлежности класса к проекту
         return !className.matches("^(java|javax|sun|com.sun).*");
     }
 
@@ -188,7 +193,69 @@ public class DependencyGraphGenerator {
         }
     }
 
-    public String outputGraphAsJson() {
+    public Map<String, Object> analyzeArchitecture() {
+        Map<String, Object> analysis = new HashMap<>();
+
+        analysis.put("cycles", detectCycles());
+        analysis.put("godClasses", detectGodClasses());
+        analysis.put("bottlenecks", detectBottlenecks());
+
+        return analysis;
+    }
+
+    private List<List<String>> detectCycles() {
+        CycleDetector<String, DefaultEdge> cycleDetector = new CycleDetector<>(graph);
+        List<List<String>> cycles = new ArrayList<>();
+        
+        if (cycleDetector.detectCycles()) {
+            for (String cycle : cycleDetector.findCycles()) {
+                List<String> cyclePath = new ArrayList<>();
+                cyclePath.add(cycle);
+                cycles.add(cyclePath);
+            }
+        }
+        return cycles;
+    }
+
+    private Map<String, Double> detectGodClasses() {
+        PageRank<String, DefaultEdge> pr = new PageRank<>(graph);
+        
+        return graph.vertexSet().stream()
+            .collect(Collectors.toMap(
+                v -> v,
+                pr::getVertexScore
+            ))
+            .entrySet().stream()
+            .sorted(Map.Entry.<String, Double>comparingByValue().reversed())
+            .limit(5)
+            .collect(Collectors.toMap(
+                Map.Entry::getKey,
+                Map.Entry::getValue,
+                (e1, e2) -> e1,
+                LinkedHashMap::new
+            ));
+    }
+
+    private Map<String, Double> detectBottlenecks() {
+        BetweennessCentrality<String, DefaultEdge> bc = new BetweennessCentrality<>(graph);
+        
+        return graph.vertexSet().stream()
+            .collect(Collectors.toMap(
+                v -> v,
+                bc::getVertexScore
+            ))
+            .entrySet().stream()
+            .sorted(Map.Entry.<String, Double>comparingByValue().reversed())
+            .limit(5)
+            .collect(Collectors.toMap(
+                Map.Entry::getKey,
+                Map.Entry::getValue,
+                (e1, e2) -> e1,
+                LinkedHashMap::new
+            ));
+    }
+
+    public Map<String, Object> outputGraphAsJson() {
         List<Map<String, String>> nodes = graph.vertexSet().stream()
                 .map(v -> {
                     Map<String, String> node = new HashMap<>();
@@ -211,16 +278,37 @@ public class DependencyGraphGenerator {
         Map<String, Object> json = new HashMap<>();
         json.put("nodes", nodes);
         json.put("edges", edges);
+        return json;
+    }
 
-        return new GsonBuilder().setPrettyPrinting().create().toJson(json);
+    public String outputFullAnalysisAsJson() {
+        Map<String, Object> fullReport = new HashMap<>();
+        
+        fullReport.put("dependencyGraph", outputGraphAsJson());
+        fullReport.put("architectureAnalysis", analyzeArchitecture());
+
+        Gson gson = new GsonBuilder()
+            .setPrettyPrinting()
+            .registerTypeAdapter(Double.class, (JsonSerializer<Double>) (src, type, context) -> {
+                if (src == src.longValue()) {
+                    return new JsonPrimitive(src.longValue());
+                }
+                return new JsonPrimitive(Math.round(src * 100.0) / 100.0);
+            })
+            .create();
+
+        return gson.toJson(fullReport);
     }
 
     public static void main(String[] args) {
         DependencyGraphGenerator generator = new DependencyGraphGenerator();
         try {
             generator.parseDirectory("/Users/i-pechersky/VSCProjects/Parser/examples/PetClinic/spring-petclinic-microservices"); // Change this to your directory
-            String json = generator.outputGraphAsJson();
-            Files.write(Paths.get("outputGraph.txt"), json.getBytes(StandardCharsets.UTF_8));
+            
+            String fullReport = generator.outputFullAnalysisAsJson();
+            Files.write(Paths.get("architecture-analysis.json"), fullReport.getBytes(StandardCharsets.UTF_8));
+            
+            System.out.println("Анализ архитектуры сохранен в architecture-analysis.json");
         } catch (IOException e) {
             e.printStackTrace();
         }
