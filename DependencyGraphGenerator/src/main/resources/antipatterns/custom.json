@@ -1,0 +1,39 @@
+{
+"name": "CustomAntiPattern",
+"checks": [
+        {
+            "type": "CYCLE",
+            "params": {}
+        },
+        {
+            "type": "GOD_CLASS",
+            "params": {
+                "threshold": 0.01
+            }
+        },
+        {
+            "type": "BOTTLENECK",
+            "params": {
+                "threshold": 0.1
+            }
+        },
+        {
+            "type": "SERVICE_CHAIN",
+            "params": {
+                "maxChainLength": 5
+            }
+        },
+        {
+            "type": "HUB_LIKE_DEPENDENCY",
+            "params": {
+                "minDependencies": 10
+            }
+        },
+        {
+            "type": "CHATTY_SERVICE",
+            "params": {
+                "minMessages": 20
+            }
+        }
+    ]
+}
