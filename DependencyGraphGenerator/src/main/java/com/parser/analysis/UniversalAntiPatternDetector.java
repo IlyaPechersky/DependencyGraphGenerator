@@ -114,7 +114,9 @@ public class UniversalAntiPatternDetector {
             findChains(vertex, chain, chains, maxChainLength);
         }
 
-        return chains;
+        return chains.entrySet().stream()
+            .filter(entry -> entry.getKey().startsWith(graphData.getProjectPackage()))
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     private void findChains(String current, List<String> chain, Map<String, List<String>> chains, int maxLength) {

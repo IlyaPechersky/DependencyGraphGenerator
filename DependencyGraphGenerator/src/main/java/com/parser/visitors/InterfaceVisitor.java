@@ -15,7 +15,7 @@ public class InterfaceVisitor extends VoidVisitorAdapter<Void> {
     public void visit(ClassOrInterfaceDeclaration n, Void arg) {
         if (!n.isInterface()) return;
 
-        String interfaceName = n.getNameAsString();
+        String interfaceName = n.getFullyQualifiedName().orElse(n.getNameAsString());
         graphData.addNode(interfaceName, "interface");
 
         // Наследование интерфейсов (extends)

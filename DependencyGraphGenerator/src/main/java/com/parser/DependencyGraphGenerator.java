@@ -5,6 +5,10 @@ import com.parser.config.AntipatternConfig;
 import com.parser.model.GraphData;
 import com.parser.visitors.*;
 import com.github.javaparser.JavaParser;
+import com.github.javaparser.ParseResult;
+import com.github.javaparser.ParserConfiguration;
+import com.github.javaparser.symbolsolver.JavaSymbolSolver;
+import com.github.javaparser.symbolsolver.resolution.typesolvers.*;
 import com.github.javaparser.ast.CompilationUnit;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -21,8 +25,8 @@ public class DependencyGraphGenerator {
     private final GraphData graphData;
     private final UniversalAntiPatternDetector detector;
 
-    public DependencyGraphGenerator() {
-        this.graphData = new GraphData();
+    public DependencyGraphGenerator(String projectPackage) {
+        this.graphData = new GraphData(projectPackage);
         this.detector = new UniversalAntiPatternDetector(graphData);
     }
 
@@ -35,8 +39,19 @@ public class DependencyGraphGenerator {
 
     private void parseFile(File file) {
         try {
-            CompilationUnit cu = new JavaParser().parse(file).getResult().orElse(null);
-            if (cu != null) {
+            // Настройка SymbolResolver
+            CombinedTypeSolver typeSolver = new CombinedTypeSolver();
+            typeSolver.add(new JavaParserTypeSolver(file.getParentFile()));
+            typeSolver.add(new ReflectionTypeSolver());
+
+            ParserConfiguration config = new ParserConfiguration()
+                .setSymbolResolver(new JavaSymbolSolver(typeSolver));
+
+            JavaParser parser = new JavaParser(config);
+            
+            ParseResult<CompilationUnit> parseResult = parser.parse(file);
+            if (parseResult.isSuccessful() && parseResult.getResult().isPresent()) {
+                CompilationUnit cu = parseResult.getResult().get();
                 new ClassVisitor(graphData).visit(cu, null);
                 new EnumVisitor(graphData).visit(cu, null);
                 new AnnotationVisitor(graphData).visit(cu, null);
@@ -77,7 +92,8 @@ public class DependencyGraphGenerator {
     }
 
     public static void main(String[] args) {
-        DependencyGraphGenerator generator = new DependencyGraphGenerator();
+        String projectPackage = "org.springframework.samples.petclinic"; // depends on rep
+        DependencyGraphGenerator generator = new DependencyGraphGenerator(projectPackage);
         try {
             generator.parseDirectory("/Users/i-pechersky/VSCProjects/Parser/examples/PetClinic/spring-petclinic-microservices"); // Change this to your directory
             String fullReport = generator.outputFullAnalysisAsJson();

@@ -2,371 +2,76 @@
   "architectureAnalysis": {
     "chattyServices": {},
     "bottlenecks": {
-      "AIDataProvider": 0.39,
-      "VisitsServiceClient": 0.3,
-      "PetType": 0.11,
-      "Pet": 1,
-      "Owner": 0.86,
-      "Visit": 0.25
+      "org.springframework.samples.petclinic.api.application.VisitsServiceClient": 1,
+      "org.springframework.samples.petclinic.customers.model.Pet": 0.5,
+      "org.springframework.samples.petclinic.customers.model.Owner": 1
     },
     "cycles": [
       [
-        "Owner"
+        "org.springframework.samples.petclinic.customers.model.Owner"
       ],
       [
-        "Pet"
+        "org.springframework.samples.petclinic.customers.model.Pet"
       ]
     ],
-    "hubLikeDependencies": {
-      "OwnerResource": 10,
-      "Owner": 10,
-      "List": 10,
-      "String": 21,
-      "AIDataProvider": 12,
-      "Pet": 11
-    },
+    "hubLikeDependencies": {},
     "serviceChains": {
-      "Entity": [
-        "OwnerResource",
-        "OwnerEntityMapper",
-        "Owner",
-        "Pet",
-        "PetType",
-        "Integer",
-        "String",
-        "Entity",
-        "Owner",
-        "Object",
-        "Entity",
-        "Entity"
+      "org.springframework.samples.petclinic.customers.model.Owner": [
+        "org.springframework.samples.petclinic.customers.model.Pet",
+        "org.springframework.samples.petclinic.customers.model.Owner",
+        "org.springframework.samples.petclinic.customers.model.Pet",
+        "org.springframework.samples.petclinic.customers.model.Owner",
+        "org.springframework.samples.petclinic.customers.model.Pet",
+        "org.springframework.samples.petclinic.customers.model.PetType",
+        "org.springframework.samples.petclinic.customers.model.Owner"
       ],
-      "OwnerRequest": [
-        "OwnerResource",
-        "OwnerEntityMapper",
-        "Owner",
-        "Pet",
-        "PetType",
-        "Integer",
-        "String",
-        "Entity",
-        "Owner",
-        "Object",
-        "Entity",
-        "Entity",
-        "OwnerRequest",
-        "Owner",
-        "OwnerRequest"
+      "org.springframework.samples.petclinic.customers.model.List\u003cPet\u003e": [
+        "org.springframework.samples.petclinic.customers.model.Owner",
+        "org.springframework.samples.petclinic.customers.model.Pet",
+        "org.springframework.samples.petclinic.customers.model.Owner",
+        "org.springframework.samples.petclinic.customers.model.Pet",
+        "org.springframework.samples.petclinic.customers.model.Owner",
+        "org.springframework.samples.petclinic.customers.model.Set\u003cPet\u003e",
+        "org.springframework.samples.petclinic.customers.model.List\u003cPet\u003e"
       ],
-      "Owner": [
-        "OwnerResource",
-        "OwnerEntityMapper",
-        "Owner",
-        "Pet",
-        "PetType",
-        "Integer",
-        "String",
-        "Entity",
-        "Owner",
-        "Object",
-        "Entity",
-        "Entity",
-        "OwnerRequest",
-        "Owner"
+      "org.springframework.samples.petclinic.customers.model.Set\u003cPet\u003e": [
+        "org.springframework.samples.petclinic.customers.model.Owner",
+        "org.springframework.samples.petclinic.customers.model.Pet",
+        "org.springframework.samples.petclinic.customers.model.Owner",
+        "org.springframework.samples.petclinic.customers.model.Pet",
+        "org.springframework.samples.petclinic.customers.model.Owner",
+        "org.springframework.samples.petclinic.customers.model.Set\u003cPet\u003e"
       ],
-      "Table": [
-        "OwnerResource",
-        "OwnerEntityMapper",
-        "Owner",
-        "Pet",
-        "PetType",
-        "Integer",
-        "String",
-        "Entity",
-        "Owner",
-        "Object",
-        "Entity",
-        "Entity",
-        "Table"
+      "org.springframework.samples.petclinic.customers.model.PetType": [
+        "org.springframework.samples.petclinic.customers.model.Pet",
+        "org.springframework.samples.petclinic.customers.model.Owner",
+        "org.springframework.samples.petclinic.customers.model.Pet",
+        "org.springframework.samples.petclinic.customers.model.Owner",
+        "org.springframework.samples.petclinic.customers.model.Pet",
+        "org.springframework.samples.petclinic.customers.model.PetType"
       ],
-      "Optional": [
-        "OwnerResource",
-        "OwnerEntityMapper",
-        "Owner",
-        "Pet",
-        "PetType",
-        "Integer",
-        "String",
-        "Entity",
-        "Owner",
-        "Object",
-        "Entity",
-        "Entity",
-        "OwnerRequest",
-        "Owner",
-        "OwnerRequest",
-        "Optional"
-      ],
-      "WebMvcTest": [
-        "PetResourceTest",
-        "Pet",
-        "Owner",
-        "Pet",
-        "PetType",
-        "Integer",
-        "String",
-        "Entity",
-        "Owner",
-        "Object",
-        "Entity",
-        "Entity",
-        "Object",
-        "Entity",
-        "ExtendWith",
-        "WebMvcTest"
-      ],
-      "Timed": [
-        "OwnerResource",
-        "OwnerEntityMapper",
-        "Owner",
-        "Pet",
-        "PetType",
-        "Integer",
-        "String",
-        "Entity",
-        "Owner",
-        "Object",
-        "Entity",
-        "Entity",
-        "OwnerRequest",
-        "Owner",
-        "OwnerRequest",
-        "Optional",
-        "List",
-        "RequestMapping",
-        "RestController",
-        "Timed"
-      ],
-      "RestController": [
-        "OwnerResource",
-        "OwnerEntityMapper",
-        "Owner",
-        "Pet",
-        "PetType",
-        "Integer",
-        "String",
-        "Entity",
-        "Owner",
-        "Object",
-        "Entity",
-        "Entity",
-        "OwnerRequest",
-        "Owner",
-        "OwnerRequest",
-        "Optional",
-        "List",
-        "RequestMapping",
-        "RestController"
-      ],
-      "String": [
-        "OwnerResource",
-        "OwnerEntityMapper",
-        "Owner",
-        "Pet",
-        "PetType",
-        "Integer",
-        "String"
-      ],
-      "ActiveProfiles": [
-        "PetResourceTest",
-        "Pet",
-        "Owner",
-        "Pet",
-        "PetType",
-        "Integer",
-        "String",
-        "Entity",
-        "Owner",
-        "Object",
-        "Entity",
-        "Entity",
-        "Object",
-        "Entity",
-        "ExtendWith",
-        "WebMvcTest",
-        "ActiveProfiles"
-      ],
-      "Date": [
-        "OwnerEntityMapper",
-        "Owner",
-        "Pet",
-        "Owner",
-        "Pet",
-        "Integer",
-        "String",
-        "Date"
-      ],
-      "PetDetails": [
-        "PetResource",
-        "Pet",
-        "Owner",
-        "Pet",
-        "PetType",
-        "Integer",
-        "String",
-        "Entity",
-        "Owner",
-        "Object",
-        "Entity",
-        "Entity",
-        "Object",
-        "Entity",
-        "PetRequest",
-        "PetDetails"
-      ],
-      "PetType": [
-        "OwnerEntityMapper",
-        "Owner",
-        "Pet",
-        "Owner",
-        "Pet",
-        "Integer",
-        "String",
-        "Date",
-        "PetType"
-      ],
-      "RequestMapping": [
-        "OwnerResource",
-        "OwnerEntityMapper",
-        "Owner",
-        "Pet",
-        "PetType",
-        "Integer",
-        "String",
-        "Entity",
-        "Owner",
-        "Object",
-        "Entity",
-        "Entity",
-        "OwnerRequest",
-        "Owner",
-        "OwnerRequest",
-        "Optional",
-        "List",
-        "RequestMapping"
-      ],
-      "Integer": [
-        "OwnerResource",
-        "OwnerEntityMapper",
-        "Owner",
-        "Pet",
-        "PetType",
-        "Integer"
-      ],
-      "PetRequest": [
-        "PetResource",
-        "Pet",
-        "Owner",
-        "Pet",
-        "PetType",
-        "Integer",
-        "String",
-        "Entity",
-        "Owner",
-        "Object",
-        "Entity",
-        "Entity",
-        "Object",
-        "Entity",
-        "PetRequest"
-      ],
-      "Object": [
-        "OwnerResource",
-        "OwnerEntityMapper",
-        "Owner",
-        "Pet",
-        "PetType",
-        "Integer",
-        "String",
-        "Entity",
-        "Owner",
-        "Object"
-      ],
-      "List": [
-        "OwnerResource",
-        "OwnerEntityMapper",
-        "Owner",
-        "Pet",
-        "PetType",
-        "Integer",
-        "String",
-        "Entity",
-        "Owner",
-        "Object",
-        "Entity",
-        "Entity",
-        "OwnerRequest",
-        "Owner",
-        "OwnerRequest",
-        "Optional",
-        "List"
-      ],
-      "ExtendWith": [
-        "PetResourceTest",
-        "Pet",
-        "Owner",
-        "Pet",
-        "PetType",
-        "Integer",
-        "String",
-        "Entity",
-        "Owner",
-        "Object",
-        "Entity",
-        "Entity",
-        "Object",
-        "Entity",
-        "ExtendWith"
-      ],
-      "Component": [
-        "OwnerResource",
-        "OwnerEntityMapper",
-        "Owner",
-        "Pet",
-        "PetType",
-        "Integer",
-        "String",
-        "Entity",
-        "Owner",
-        "Object",
-        "Entity",
-        "Entity",
-        "OwnerRequest",
-        "Component"
+      "org.springframework.samples.petclinic.customers.model.Pet": [
+        "org.springframework.samples.petclinic.customers.model.Owner",
+        "org.springframework.samples.petclinic.customers.model.Pet",
+        "org.springframework.samples.petclinic.customers.model.Owner",
+        "org.springframework.samples.petclinic.customers.model.Pet",
+        "org.springframework.samples.petclinic.customers.model.Owner",
+        "org.springframework.samples.petclinic.customers.model.Set\u003cPet\u003e",
+        "org.springframework.samples.petclinic.customers.model.List\u003cPet\u003e",
+        "org.springframework.samples.petclinic.customers.model.Pet"
       ]
     },
     "godClasses": {
-      "String": 0.03,
-      "JpaRepository": 0.03,
-      "SpringBootTest": 0.02,
-      "SpringBootApplication": 0.02,
-      "List": 0.02,
-      "Integer": 0.02,
-      "EnableDiscoveryClient": 0.01,
-      "RestController": 0.01,
-      "Entity": 0.01,
-      "Table": 0.01,
-      "Component": 0.01,
-      "Configuration": 0.01,
-      "Mono": 0.01,
-      "ActiveProfiles": 0.01,
-      "Logger": 0.01,
-      "ExtendWith": 0.01
+      "org.springframework.samples.petclinic.api.application.WebClient.Builder": 0.01,
+      "org.springframework.samples.petclinic.visits.model.Visit": 0.01,
+      "org.springframework.samples.petclinic.api.boundary.web.ResponseEntity\u003cString\u003e": 0.01,
+      "org.springframework.samples.petclinic.vets.web.VetRepository": 0.01
     }
   },
   "dependencyGraph": {
     "nodes": [
       {
-        "id": "PetclinicConfigServerApplicationTests",
+        "id": "org.springframework.samples.petclinic.config.PetclinicConfigServerApplicationTests",
         "type": "class"
       },
       {
@@ -374,11 +79,11 @@
         "type": "annotation"
       },
       {
-        "id": "ConfigServerApplication",
+        "id": "org.springframework.samples.petclinic.config.ConfigServerApplication",
         "type": "class"
       },
       {
-        "id": "String",
+        "id": "java.lang.String[]",
         "type": "unknown"
       },
       {
@@ -390,11 +95,11 @@
         "type": "annotation"
       },
       {
-        "id": "DiscoveryServerApplicationTests",
+        "id": "org.springframework.samples.petclinic.discovery.DiscoveryServerApplicationTests",
         "type": "class"
       },
       {
-        "id": "DiscoveryServerApplication",
+        "id": "org.springframework.samples.petclinic.discovery.DiscoveryServerApplication",
         "type": "class"
       },
       {
@@ -402,23 +107,23 @@
         "type": "annotation"
       },
       {
-        "id": "AIBeanConfiguration",
+        "id": "org.springframework.samples.petclinic.genai.AIBeanConfiguration",
         "type": "class"
       },
       {
-        "id": "ChatMemory",
+        "id": "org.springframework.samples.petclinic.genai.ChatMemory",
         "type": "unknown"
       },
       {
-        "id": "VectorStore",
+        "id": "org.springframework.samples.petclinic.genai.VectorStore",
         "type": "unknown"
       },
       {
-        "id": "EmbeddingModel",
+        "id": "org.springframework.samples.petclinic.genai.EmbeddingModel",
         "type": "unknown"
       },
       {
-        "id": "WebClient.Builder",
+        "id": "org.springframework.samples.petclinic.genai.WebClient.Builder",
         "type": "unknown"
       },
       {
@@ -426,39 +131,43 @@
         "type": "annotation"
       },
       {
-        "id": "AIDataProvider",
+        "id": "org.springframework.samples.petclinic.genai.AIDataProvider",
         "type": "class"
       },
       {
-        "id": "WebClient",
+        "id": "java.lang.String",
         "type": "unknown"
       },
       {
-        "id": "OwnersResponse",
+        "id": "org.springframework.samples.petclinic.genai.WebClient",
         "type": "unknown"
       },
       {
-        "id": "VetResponse",
+        "id": "org.springframework.samples.petclinic.genai.OwnersResponse",
         "type": "unknown"
       },
       {
-        "id": "VetRequest",
+        "id": "org.springframework.samples.petclinic.genai.VetResponse",
         "type": "unknown"
       },
       {
-        "id": "AddedPetResponse",
+        "id": "org.springframework.samples.petclinic.genai.VetRequest",
         "type": "unknown"
       },
       {
-        "id": "AddPetRequest",
+        "id": "org.springframework.samples.petclinic.genai.AddedPetResponse",
         "type": "unknown"
       },
       {
-        "id": "OwnerResponse",
+        "id": "org.springframework.samples.petclinic.genai.AddPetRequest",
         "type": "unknown"
       },
       {
-        "id": "OwnerRequest",
+        "id": "org.springframework.samples.petclinic.genai.OwnerResponse",
+        "type": "unknown"
+      },
+      {
+        "id": "org.springframework.samples.petclinic.genai.OwnerRequest",
         "type": "unknown"
       },
       {
@@ -466,23 +175,23 @@
         "type": "annotation"
       },
       {
-        "id": "VectorStoreController",
+        "id": "org.springframework.samples.petclinic.genai.VectorStoreController",
         "type": "class"
       },
       {
-        "id": "Logger",
+        "id": "org.springframework.samples.petclinic.genai.Logger",
         "type": "unknown"
       },
       {
-        "id": "ApplicationStartedEvent",
+        "id": "org.springframework.samples.petclinic.genai.ApplicationStartedEvent",
         "type": "unknown"
       },
       {
-        "id": "Resource",
+        "id": "org.springframework.samples.petclinic.genai.Resource",
         "type": "unknown"
       },
       {
-        "id": "List",
+        "id": "org.springframework.samples.petclinic.genai.List\u003cVet\u003e",
         "type": "unknown"
       },
       {
@@ -490,7 +199,7 @@
         "type": "annotation"
       },
       {
-        "id": "GenAIServiceApplication",
+        "id": "org.springframework.samples.petclinic.genai.GenAIServiceApplication",
         "type": "class"
       },
       {
@@ -498,31 +207,7 @@
         "type": "annotation"
       },
       {
-        "id": "AIFunctionConfiguration",
-        "type": "class"
-      },
-      {
-        "id": "Function",
-        "type": "unknown"
-      },
-      {
-        "id": "PetclinicChatClient",
-        "type": "class"
-      },
-      {
-        "id": "ChatClient",
-        "type": "unknown"
-      },
-      {
-        "id": "RestController",
-        "type": "annotation"
-      },
-      {
-        "id": "RequestMapping",
-        "type": "annotation"
-      },
-      {
-        "id": "SpringBootAdminApplication",
+        "id": "org.springframework.samples.petclinic.admin.SpringBootAdminApplication",
         "type": "class"
       },
       {
@@ -530,15 +215,15 @@
         "type": "annotation"
       },
       {
-        "id": "VetResourceTest",
+        "id": "org.springframework.samples.petclinic.vets.web.VetResourceTest",
         "type": "class"
       },
       {
-        "id": "MockMvc",
+        "id": "org.springframework.samples.petclinic.vets.web.MockMvc",
         "type": "unknown"
       },
       {
-        "id": "VetRepository",
+        "id": "org.springframework.samples.petclinic.vets.web.VetRepository",
         "type": "unknown"
       },
       {
@@ -554,11 +239,23 @@
         "type": "annotation"
       },
       {
-        "id": "VetResource",
+        "id": "org.springframework.samples.petclinic.vets.web.VetResource",
         "type": "class"
       },
       {
-        "id": "VetsServiceApplication",
+        "id": "org.springframework.samples.petclinic.vets.web.List\u003cVet\u003e",
+        "type": "unknown"
+      },
+      {
+        "id": "RequestMapping",
+        "type": "annotation"
+      },
+      {
+        "id": "RestController",
+        "type": "annotation"
+      },
+      {
+        "id": "org.springframework.samples.petclinic.vets.VetsServiceApplication",
         "type": "class"
       },
       {
@@ -566,7 +263,7 @@
         "type": "annotation"
       },
       {
-        "id": "CacheConfig",
+        "id": "org.springframework.samples.petclinic.vets.system.CacheConfig",
         "type": "class"
       },
       {
@@ -578,19 +275,23 @@
         "type": "annotation"
       },
       {
-        "id": "Vet",
+        "id": "org.springframework.samples.petclinic.vets.model.Vet",
         "type": "class"
       },
       {
-        "id": "Integer",
+        "id": "java.lang.Integer",
         "type": "unknown"
       },
       {
-        "id": "Set",
+        "id": "org.springframework.samples.petclinic.vets.model.Set\u003cSpecialty\u003e",
         "type": "unknown"
       },
       {
-        "id": "Specialty",
+        "id": "org.springframework.samples.petclinic.vets.model.List\u003cSpecialty\u003e",
+        "type": "unknown"
+      },
+      {
+        "id": "org.springframework.samples.petclinic.vets.model.Specialty",
         "type": "unknown"
       },
       {
@@ -602,39 +303,43 @@
         "type": "annotation"
       },
       {
+        "id": "org.springframework.samples.petclinic.vets.model.VetRepository",
+        "type": "interface"
+      },
+      {
         "id": "JpaRepository",
         "type": "interface"
       },
       {
-        "id": "CircuitBreakerConfiguration",
+        "id": "org.springframework.samples.petclinic.api.boundary.web.CircuitBreakerConfiguration",
         "type": "class"
       },
       {
-        "id": "CircuitBreakerRegistry",
+        "id": "org.springframework.samples.petclinic.api.boundary.web.CircuitBreakerRegistry",
         "type": "unknown"
       },
       {
-        "id": "TimeLimiterRegistry",
+        "id": "org.springframework.samples.petclinic.api.boundary.web.TimeLimiterRegistry",
         "type": "unknown"
       },
       {
-        "id": "Resilience4JConfigurationProperties",
+        "id": "org.springframework.samples.petclinic.api.boundary.web.Resilience4JConfigurationProperties",
         "type": "unknown"
       },
       {
-        "id": "ApiGatewayControllerTest",
+        "id": "org.springframework.samples.petclinic.api.boundary.web.ApiGatewayControllerTest",
         "type": "class"
       },
       {
-        "id": "CustomersServiceClient",
+        "id": "org.springframework.samples.petclinic.api.boundary.web.CustomersServiceClient",
         "type": "unknown"
       },
       {
-        "id": "VisitsServiceClient",
+        "id": "org.springframework.samples.petclinic.api.boundary.web.VisitsServiceClient",
         "type": "unknown"
       },
       {
-        "id": "WebTestClient",
+        "id": "org.springframework.samples.petclinic.api.boundary.web.WebTestClient",
         "type": "unknown"
       },
       {
@@ -646,123 +351,151 @@
         "type": "annotation"
       },
       {
-        "id": "ApiGatewayApplicationTests",
+        "id": "org.springframework.samples.petclinic.api.ApiGatewayApplicationTests",
         "type": "class"
       },
       {
-        "id": "VisitsServiceClientIntegrationTest",
+        "id": "org.springframework.samples.petclinic.api.application.VisitsServiceClientIntegrationTest",
         "type": "class"
       },
       {
-        "id": "MockWebServer",
+        "id": "org.springframework.samples.petclinic.api.application.VisitsServiceClient",
         "type": "unknown"
       },
       {
-        "id": "Visits",
+        "id": "org.springframework.samples.petclinic.api.application.MockWebServer",
         "type": "unknown"
       },
       {
-        "id": "Consumer",
+        "id": "org.springframework.samples.petclinic.api.application.Visits",
         "type": "unknown"
       },
       {
-        "id": "PetDetailsBuilder",
+        "id": "org.springframework.samples.petclinic.api.application.Consumer\u003cMockResponse\u003e",
+        "type": "unknown"
+      },
+      {
+        "id": "org.springframework.samples.petclinic.api.boundary.web.ApiGatewayController",
         "type": "class"
       },
       {
-        "id": "PetType",
+        "id": "org.springframework.samples.petclinic.api.boundary.web.ReactiveCircuitBreakerFactory",
         "type": "unknown"
       },
       {
-        "id": "PetDetails",
+        "id": "org.springframework.samples.petclinic.api.boundary.web.Mono\u003cOwnerDetails\u003e",
         "type": "unknown"
       },
       {
-        "id": "OwnerDetailsBuilder",
+        "id": "org.springframework.samples.petclinic.api.boundary.web.Function\u003cVisits,OwnerDetails\u003e",
+        "type": "unknown"
+      },
+      {
+        "id": "org.springframework.samples.petclinic.api.boundary.web.OwnerDetails",
+        "type": "unknown"
+      },
+      {
+        "id": "org.springframework.samples.petclinic.api.boundary.web.Mono\u003cVisits\u003e",
+        "type": "unknown"
+      },
+      {
+        "id": "org.springframework.samples.petclinic.api.boundary.web.FallbackController",
         "type": "class"
       },
       {
-        "id": "OwnerDetails",
+        "id": "org.springframework.samples.petclinic.api.boundary.web.ResponseEntity\u003cString\u003e",
         "type": "unknown"
       },
       {
-        "id": "ApiGatewayController",
+        "id": "org.springframework.samples.petclinic.api.ApiGatewayApplication",
         "type": "class"
       },
       {
-        "id": "ReactiveCircuitBreakerFactory",
+        "id": "org.springframework.samples.petclinic.api.Resource",
         "type": "unknown"
       },
       {
-        "id": "Mono",
+        "id": "org.springframework.samples.petclinic.api.RestTemplate",
         "type": "unknown"
       },
       {
-        "id": "FallbackController",
+        "id": "org.springframework.samples.petclinic.api.WebClient.Builder",
+        "type": "unknown"
+      },
+      {
+        "id": "org.springframework.samples.petclinic.api.RouterFunction\u003c?\u003e",
+        "type": "unknown"
+      },
+      {
+        "id": "org.springframework.samples.petclinic.api.Customizer\u003cReactiveResilience4JCircuitBreakerFactory\u003e",
+        "type": "unknown"
+      },
+      {
+        "id": "org.springframework.samples.petclinic.api.application.CustomersServiceClient",
         "type": "class"
       },
       {
-        "id": "ResponseEntity",
+        "id": "org.springframework.samples.petclinic.api.application.WebClient.Builder",
         "type": "unknown"
       },
       {
-        "id": "ApiGatewayApplication",
+        "id": "org.springframework.samples.petclinic.api.application.Mono\u003cOwnerDetails\u003e",
+        "type": "unknown"
+      },
+      {
+        "id": "org.springframework.samples.petclinic.api.application.Mono\u003cVisits\u003e",
+        "type": "unknown"
+      },
+      {
+        "id": "java.util.List\u003cjava.lang.Integer\u003e",
+        "type": "unknown"
+      },
+      {
+        "id": "org.springframework.samples.petclinic.customers.web.PetResourceTest",
         "type": "class"
       },
       {
-        "id": "RestTemplate",
+        "id": "org.springframework.samples.petclinic.customers.web.MockMvc",
         "type": "unknown"
       },
       {
-        "id": "RouterFunction",
+        "id": "org.springframework.samples.petclinic.customers.web.PetRepository",
         "type": "unknown"
       },
       {
-        "id": "Customizer",
+        "id": "org.springframework.samples.petclinic.customers.web.OwnerRepository",
         "type": "unknown"
       },
       {
-        "id": "PetResourceTest",
+        "id": "org.springframework.samples.petclinic.customers.web.Pet",
+        "type": "unknown"
+      },
+      {
+        "id": "org.springframework.samples.petclinic.customers.CustomersServiceApplication",
         "type": "class"
       },
       {
-        "id": "PetRepository",
-        "type": "unknown"
-      },
-      {
-        "id": "OwnerRepository",
-        "type": "unknown"
-      },
-      {
-        "id": "Pet",
-        "type": "unknown"
-      },
-      {
-        "id": "CustomersServiceApplication",
+        "id": "org.springframework.samples.petclinic.customers.config.MetricConfig",
         "type": "class"
       },
       {
-        "id": "MetricConfig",
+        "id": "org.springframework.samples.petclinic.customers.config.MeterRegistryCustomizer\u003cMeterRegistry\u003e",
+        "type": "unknown"
+      },
+      {
+        "id": "org.springframework.samples.petclinic.customers.config.TimedAspect",
+        "type": "unknown"
+      },
+      {
+        "id": "org.springframework.samples.petclinic.customers.config.MeterRegistry",
+        "type": "unknown"
+      },
+      {
+        "id": "org.springframework.samples.petclinic.customers.web.ResourceNotFoundException",
         "type": "class"
       },
       {
-        "id": "MeterRegistryCustomizer",
-        "type": "unknown"
-      },
-      {
-        "id": "TimedAspect",
-        "type": "unknown"
-      },
-      {
-        "id": "MeterRegistry",
-        "type": "unknown"
-      },
-      {
-        "id": "ResourceNotFoundException",
-        "type": "class"
-      },
-      {
-        "id": "RuntimeException",
+        "id": "java.lang.RuntimeException",
         "type": "class"
       },
       {
@@ -770,11 +503,23 @@
         "type": "annotation"
       },
       {
-        "id": "PetResource",
+        "id": "org.springframework.samples.petclinic.customers.web.PetResource",
         "type": "class"
       },
       {
-        "id": "PetRequest",
+        "id": "org.springframework.samples.petclinic.customers.web.Logger",
+        "type": "unknown"
+      },
+      {
+        "id": "org.springframework.samples.petclinic.customers.web.List\u003cPetType\u003e",
+        "type": "unknown"
+      },
+      {
+        "id": "org.springframework.samples.petclinic.customers.web.PetRequest",
+        "type": "unknown"
+      },
+      {
+        "id": "org.springframework.samples.petclinic.customers.web.PetDetails",
         "type": "unknown"
       },
       {
@@ -782,1093 +527,565 @@
         "type": "annotation"
       },
       {
-        "id": "Mapper",
+        "id": "org.springframework.samples.petclinic.customers.web.mapper.Mapper",
         "type": "interface"
       },
       {
-        "id": "OwnerEntityMapper",
+        "id": "org.springframework.samples.petclinic.customers.web.mapper.OwnerEntityMapper",
         "type": "class"
       },
       {
-        "id": "Owner",
+        "id": "unknown.package.Mapper\u003cOwnerRequest,Owner\u003e",
+        "type": "interface"
+      },
+      {
+        "id": "org.springframework.samples.petclinic.customers.web.mapper.Owner",
         "type": "unknown"
       },
       {
-        "id": "OwnerResource",
+        "id": "org.springframework.samples.petclinic.customers.web.mapper.OwnerRequest",
+        "type": "unknown"
+      },
+      {
+        "id": "org.springframework.samples.petclinic.customers.web.OwnerResource",
         "type": "class"
       },
       {
-        "id": "Optional",
+        "id": "org.springframework.samples.petclinic.customers.web.OwnerEntityMapper",
         "type": "unknown"
       },
       {
-        "id": "Date",
+        "id": "org.springframework.samples.petclinic.customers.web.Owner",
         "type": "unknown"
       },
       {
-        "id": "Object",
+        "id": "org.springframework.samples.petclinic.customers.web.OwnerRequest",
         "type": "unknown"
       },
       {
-        "id": "VisitResourceTest",
+        "id": "org.springframework.samples.petclinic.customers.web.Optional\u003cOwner\u003e",
+        "type": "unknown"
+      },
+      {
+        "id": "org.springframework.samples.petclinic.customers.web.List\u003cOwner\u003e",
+        "type": "unknown"
+      },
+      {
+        "id": "org.springframework.samples.petclinic.customers.model.Pet",
         "type": "class"
       },
       {
-        "id": "VisitRepository",
+        "id": "java.util.Date",
         "type": "unknown"
       },
       {
-        "id": "VisitResource",
-        "type": "class"
-      },
-      {
-        "id": "Visit",
+        "id": "org.springframework.samples.petclinic.customers.model.PetType",
         "type": "unknown"
       },
       {
-        "id": "VisitBuilder",
+        "id": "org.springframework.samples.petclinic.customers.model.Owner",
+        "type": "unknown"
+      },
+      {
+        "id": "java.lang.Object",
+        "type": "unknown"
+      },
+      {
+        "id": "org.springframework.samples.petclinic.customers.model.PetRepository",
+        "type": "interface"
+      },
+      {
+        "id": "org.springframework.samples.petclinic.customers.model.OwnerRepository",
+        "type": "interface"
+      },
+      {
+        "id": "org.springframework.samples.petclinic.customers.model.Set\u003cPet\u003e",
+        "type": "unknown"
+      },
+      {
+        "id": "org.springframework.samples.petclinic.customers.model.List\u003cPet\u003e",
+        "type": "unknown"
+      },
+      {
+        "id": "org.springframework.samples.petclinic.visits.web.VisitResourceTest",
         "type": "class"
       },
       {
-        "id": "VisitsServiceApplication",
+        "id": "org.springframework.samples.petclinic.visits.web.MockMvc",
+        "type": "unknown"
+      },
+      {
+        "id": "org.springframework.samples.petclinic.visits.web.VisitRepository",
+        "type": "unknown"
+      },
+      {
+        "id": "org.springframework.samples.petclinic.visits.config.MetricConfig",
+        "type": "class"
+      },
+      {
+        "id": "org.springframework.samples.petclinic.visits.config.MeterRegistryCustomizer\u003cMeterRegistry\u003e",
+        "type": "unknown"
+      },
+      {
+        "id": "org.springframework.samples.petclinic.visits.config.TimedAspect",
+        "type": "unknown"
+      },
+      {
+        "id": "org.springframework.samples.petclinic.visits.config.MeterRegistry",
+        "type": "unknown"
+      },
+      {
+        "id": "org.springframework.samples.petclinic.visits.model.VisitRepository",
+        "type": "interface"
+      },
+      {
+        "id": "org.springframework.samples.petclinic.visits.model.Visit",
+        "type": "class"
+      },
+      {
+        "id": "org.springframework.samples.petclinic.visits.model.Visit.VisitBuilder",
+        "type": "class"
+      },
+      {
+        "id": "org.springframework.samples.petclinic.visits.VisitsServiceApplication",
         "type": "class"
       }
     ],
     "edges": [
       {
-        "source": "PetclinicConfigServerApplicationTests",
-        "type": "class_annotation",
-        "target": "SpringBootTest"
+        "source": "org.springframework.samples.petclinic.genai.AIBeanConfiguration",
+        "type": "method_return",
+        "target": "org.springframework.samples.petclinic.genai.ChatMemory"
       },
       {
-        "source": "ConfigServerApplication",
+        "source": "org.springframework.samples.petclinic.genai.AIBeanConfiguration",
+        "type": "method_return",
+        "target": "org.springframework.samples.petclinic.genai.VectorStore"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.genai.AIBeanConfiguration",
         "type": "method_parameter",
-        "target": "String"
+        "target": "org.springframework.samples.petclinic.genai.EmbeddingModel"
       },
       {
-        "source": "ConfigServerApplication",
-        "type": "class_annotation",
-        "target": "EnableConfigServer"
+        "source": "org.springframework.samples.petclinic.genai.AIBeanConfiguration",
+        "type": "method_return",
+        "target": "org.springframework.samples.petclinic.genai.WebClient.Builder"
       },
       {
-        "source": "ConfigServerApplication",
-        "type": "class_annotation",
-        "target": "SpringBootApplication"
+        "source": "org.springframework.samples.petclinic.genai.AIDataProvider",
+        "type": "field",
+        "target": "org.springframework.samples.petclinic.genai.VectorStore"
       },
       {
-        "source": "DiscoveryServerApplicationTests",
-        "type": "class_annotation",
-        "target": "SpringBootTest"
+        "source": "org.springframework.samples.petclinic.genai.AIDataProvider",
+        "type": "field",
+        "target": "org.springframework.samples.petclinic.genai.WebClient"
       },
       {
-        "source": "DiscoveryServerApplication",
+        "source": "org.springframework.samples.petclinic.genai.AIDataProvider",
+        "type": "method_return",
+        "target": "org.springframework.samples.petclinic.genai.OwnersResponse"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.genai.AIDataProvider",
+        "type": "method_return",
+        "target": "org.springframework.samples.petclinic.genai.VetResponse"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.genai.AIDataProvider",
         "type": "method_parameter",
-        "target": "String"
+        "target": "org.springframework.samples.petclinic.genai.VetRequest"
       },
       {
-        "source": "DiscoveryServerApplication",
-        "type": "class_annotation",
-        "target": "SpringBootApplication"
-      },
-      {
-        "source": "DiscoveryServerApplication",
-        "type": "class_annotation",
-        "target": "EnableEurekaServer"
-      },
-      {
-        "source": "AIBeanConfiguration",
+        "source": "org.springframework.samples.petclinic.genai.AIDataProvider",
         "type": "method_return",
-        "target": "ChatMemory"
+        "target": "org.springframework.samples.petclinic.genai.AddedPetResponse"
       },
       {
-        "source": "AIBeanConfiguration",
-        "type": "method_return",
-        "target": "VectorStore"
-      },
-      {
-        "source": "AIBeanConfiguration",
+        "source": "org.springframework.samples.petclinic.genai.AIDataProvider",
         "type": "method_parameter",
-        "target": "EmbeddingModel"
+        "target": "org.springframework.samples.petclinic.genai.AddPetRequest"
       },
       {
-        "source": "AIBeanConfiguration",
-        "type": "class_annotation",
-        "target": "Configuration"
-      },
-      {
-        "source": "AIDataProvider",
-        "type": "field",
-        "target": "VectorStore"
-      },
-      {
-        "source": "AIDataProvider",
-        "type": "field",
-        "target": "String"
-      },
-      {
-        "source": "AIDataProvider",
-        "type": "field",
-        "target": "WebClient"
-      },
-      {
-        "source": "AIDataProvider",
+        "source": "org.springframework.samples.petclinic.genai.AIDataProvider",
         "type": "method_return",
-        "target": "OwnersResponse"
+        "target": "org.springframework.samples.petclinic.genai.OwnerResponse"
       },
       {
-        "source": "AIDataProvider",
-        "type": "method_return",
-        "target": "VetResponse"
-      },
-      {
-        "source": "AIDataProvider",
+        "source": "org.springframework.samples.petclinic.genai.AIDataProvider",
         "type": "method_parameter",
-        "target": "VetRequest"
+        "target": "org.springframework.samples.petclinic.genai.OwnerRequest"
       },
       {
-        "source": "AIDataProvider",
-        "type": "method_return",
-        "target": "AddedPetResponse"
+        "source": "org.springframework.samples.petclinic.genai.VectorStoreController",
+        "type": "field",
+        "target": "org.springframework.samples.petclinic.genai.Logger"
       },
       {
-        "source": "AIDataProvider",
+        "source": "org.springframework.samples.petclinic.genai.VectorStoreController",
+        "type": "field",
+        "target": "org.springframework.samples.petclinic.genai.VectorStore"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.genai.VectorStoreController",
+        "type": "field",
+        "target": "org.springframework.samples.petclinic.genai.WebClient"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.genai.VectorStoreController",
         "type": "method_parameter",
-        "target": "AddPetRequest"
+        "target": "org.springframework.samples.petclinic.genai.ApplicationStartedEvent"
       },
       {
-        "source": "AIDataProvider",
+        "source": "org.springframework.samples.petclinic.genai.VectorStoreController",
         "type": "method_return",
-        "target": "OwnerResponse"
+        "target": "org.springframework.samples.petclinic.genai.Resource"
       },
       {
-        "source": "AIDataProvider",
+        "source": "org.springframework.samples.petclinic.genai.VectorStoreController",
         "type": "method_parameter",
-        "target": "OwnerRequest"
+        "target": "org.springframework.samples.petclinic.genai.List\u003cVet\u003e"
       },
       {
-        "source": "AIDataProvider",
-        "type": "class_annotation",
-        "target": "Service"
-      },
-      {
-        "source": "VectorStoreController",
+        "source": "org.springframework.samples.petclinic.vets.web.VetResourceTest",
         "type": "field",
-        "target": "Logger"
+        "target": "org.springframework.samples.petclinic.vets.web.MockMvc"
       },
       {
-        "source": "VectorStoreController",
+        "source": "org.springframework.samples.petclinic.vets.web.VetResourceTest",
         "type": "field",
-        "target": "VectorStore"
+        "target": "org.springframework.samples.petclinic.vets.web.VetRepository"
       },
       {
-        "source": "VectorStoreController",
+        "source": "org.springframework.samples.petclinic.vets.web.VetResource",
         "type": "field",
-        "target": "WebClient"
+        "target": "org.springframework.samples.petclinic.vets.web.VetRepository"
       },
       {
-        "source": "VectorStoreController",
+        "source": "org.springframework.samples.petclinic.vets.web.VetResource",
+        "type": "method_return",
+        "target": "org.springframework.samples.petclinic.vets.web.List\u003cVet\u003e"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.vets.model.Vet",
+        "type": "field",
+        "target": "org.springframework.samples.petclinic.vets.model.Set\u003cSpecialty\u003e"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.vets.model.Vet",
+        "type": "method_return",
+        "target": "org.springframework.samples.petclinic.vets.model.List\u003cSpecialty\u003e"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.vets.model.Vet",
         "type": "method_parameter",
-        "target": "ApplicationStartedEvent"
+        "target": "org.springframework.samples.petclinic.vets.model.Specialty"
       },
       {
-        "source": "VectorStoreController",
+        "source": "org.springframework.samples.petclinic.api.boundary.web.CircuitBreakerConfiguration",
         "type": "method_return",
-        "target": "Resource"
+        "target": "org.springframework.samples.petclinic.api.boundary.web.CircuitBreakerRegistry"
       },
       {
-        "source": "VectorStoreController",
+        "source": "org.springframework.samples.petclinic.api.boundary.web.CircuitBreakerConfiguration",
+        "type": "method_return",
+        "target": "org.springframework.samples.petclinic.api.boundary.web.TimeLimiterRegistry"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.api.boundary.web.CircuitBreakerConfiguration",
+        "type": "method_return",
+        "target": "org.springframework.samples.petclinic.api.boundary.web.Resilience4JConfigurationProperties"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.api.boundary.web.ApiGatewayControllerTest",
+        "type": "field",
+        "target": "org.springframework.samples.petclinic.api.boundary.web.CustomersServiceClient"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.api.boundary.web.ApiGatewayControllerTest",
+        "type": "field",
+        "target": "org.springframework.samples.petclinic.api.boundary.web.VisitsServiceClient"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.api.boundary.web.ApiGatewayControllerTest",
+        "type": "field",
+        "target": "org.springframework.samples.petclinic.api.boundary.web.WebTestClient"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.api.application.VisitsServiceClientIntegrationTest",
+        "type": "field",
+        "target": "org.springframework.samples.petclinic.api.application.VisitsServiceClient"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.api.application.VisitsServiceClientIntegrationTest",
+        "type": "field",
+        "target": "org.springframework.samples.petclinic.api.application.MockWebServer"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.api.application.VisitsServiceClientIntegrationTest",
         "type": "method_parameter",
-        "target": "List"
+        "target": "org.springframework.samples.petclinic.api.application.Visits"
       },
       {
-        "source": "VectorStoreController",
-        "type": "class_annotation",
-        "target": "Component"
-      },
-      {
-        "source": "GenAIServiceApplication",
+        "source": "org.springframework.samples.petclinic.api.application.VisitsServiceClientIntegrationTest",
         "type": "method_parameter",
-        "target": "String"
+        "target": "org.springframework.samples.petclinic.api.application.Consumer\u003cMockResponse\u003e"
       },
       {
-        "source": "GenAIServiceApplication",
-        "type": "class_annotation",
-        "target": "EnableDiscoveryClient"
-      },
-      {
-        "source": "GenAIServiceApplication",
-        "type": "class_annotation",
-        "target": "SpringBootApplication"
-      },
-      {
-        "source": "AIFunctionConfiguration",
+        "source": "org.springframework.samples.petclinic.api.boundary.web.ApiGatewayController",
         "type": "field",
-        "target": "Logger"
+        "target": "org.springframework.samples.petclinic.api.boundary.web.CustomersServiceClient"
       },
       {
-        "source": "AIFunctionConfiguration",
+        "source": "org.springframework.samples.petclinic.api.boundary.web.ApiGatewayController",
+        "type": "field",
+        "target": "org.springframework.samples.petclinic.api.boundary.web.VisitsServiceClient"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.api.boundary.web.ApiGatewayController",
+        "type": "field",
+        "target": "org.springframework.samples.petclinic.api.boundary.web.ReactiveCircuitBreakerFactory"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.api.boundary.web.ApiGatewayController",
         "type": "method_return",
-        "target": "Function"
+        "target": "org.springframework.samples.petclinic.api.boundary.web.Mono\u003cOwnerDetails\u003e"
       },
       {
-        "source": "AIFunctionConfiguration",
+        "source": "org.springframework.samples.petclinic.api.boundary.web.ApiGatewayController",
+        "type": "method_return",
+        "target": "org.springframework.samples.petclinic.api.boundary.web.Function\u003cVisits,OwnerDetails\u003e"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.api.boundary.web.ApiGatewayController",
         "type": "method_parameter",
-        "target": "AIDataProvider"
+        "target": "org.springframework.samples.petclinic.api.boundary.web.OwnerDetails"
       },
       {
-        "source": "AIFunctionConfiguration",
-        "type": "class_annotation",
-        "target": "Configuration"
-      },
-      {
-        "source": "PetclinicChatClient",
-        "type": "field",
-        "target": "Logger"
-      },
-      {
-        "source": "PetclinicChatClient",
-        "type": "field",
-        "target": "ChatClient"
-      },
-      {
-        "source": "PetclinicChatClient",
+        "source": "org.springframework.samples.petclinic.api.boundary.web.ApiGatewayController",
         "type": "method_return",
-        "target": "String"
+        "target": "org.springframework.samples.petclinic.api.boundary.web.Mono\u003cVisits\u003e"
       },
       {
-        "source": "PetclinicChatClient",
-        "type": "class_annotation",
-        "target": "RestController"
+        "source": "org.springframework.samples.petclinic.api.boundary.web.FallbackController",
+        "type": "method_return",
+        "target": "org.springframework.samples.petclinic.api.boundary.web.ResponseEntity\u003cString\u003e"
       },
       {
-        "source": "PetclinicChatClient",
-        "type": "class_annotation",
-        "target": "RequestMapping"
+        "source": "org.springframework.samples.petclinic.api.ApiGatewayApplication",
+        "type": "field",
+        "target": "org.springframework.samples.petclinic.api.Resource"
       },
       {
-        "source": "SpringBootAdminApplication",
+        "source": "org.springframework.samples.petclinic.api.ApiGatewayApplication",
+        "type": "method_return",
+        "target": "org.springframework.samples.petclinic.api.RestTemplate"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.api.ApiGatewayApplication",
+        "type": "method_return",
+        "target": "org.springframework.samples.petclinic.api.WebClient.Builder"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.api.ApiGatewayApplication",
+        "type": "method_return",
+        "target": "org.springframework.samples.petclinic.api.RouterFunction\u003c?\u003e"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.api.ApiGatewayApplication",
+        "type": "method_return",
+        "target": "org.springframework.samples.petclinic.api.Customizer\u003cReactiveResilience4JCircuitBreakerFactory\u003e"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.api.application.CustomersServiceClient",
+        "type": "field",
+        "target": "org.springframework.samples.petclinic.api.application.WebClient.Builder"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.api.application.CustomersServiceClient",
+        "type": "method_return",
+        "target": "org.springframework.samples.petclinic.api.application.Mono\u003cOwnerDetails\u003e"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.api.application.VisitsServiceClient",
+        "type": "field",
+        "target": "org.springframework.samples.petclinic.api.application.WebClient.Builder"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.api.application.VisitsServiceClient",
+        "type": "method_return",
+        "target": "org.springframework.samples.petclinic.api.application.Mono\u003cVisits\u003e"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.customers.web.PetResourceTest",
+        "type": "field",
+        "target": "org.springframework.samples.petclinic.customers.web.MockMvc"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.customers.web.PetResourceTest",
+        "type": "field",
+        "target": "org.springframework.samples.petclinic.customers.web.PetRepository"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.customers.web.PetResourceTest",
+        "type": "field",
+        "target": "org.springframework.samples.petclinic.customers.web.OwnerRepository"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.customers.web.PetResourceTest",
+        "type": "method_return",
+        "target": "org.springframework.samples.petclinic.customers.web.Pet"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.customers.config.MetricConfig",
+        "type": "method_return",
+        "target": "org.springframework.samples.petclinic.customers.config.MeterRegistryCustomizer\u003cMeterRegistry\u003e"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.customers.config.MetricConfig",
+        "type": "method_return",
+        "target": "org.springframework.samples.petclinic.customers.config.TimedAspect"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.customers.config.MetricConfig",
         "type": "method_parameter",
-        "target": "String"
+        "target": "org.springframework.samples.petclinic.customers.config.MeterRegistry"
       },
       {
-        "source": "SpringBootAdminApplication",
-        "type": "class_annotation",
-        "target": "SpringBootApplication"
-      },
-      {
-        "source": "SpringBootAdminApplication",
-        "type": "class_annotation",
-        "target": "EnableAdminServer"
-      },
-      {
-        "source": "SpringBootAdminApplication",
-        "type": "class_annotation",
-        "target": "EnableDiscoveryClient"
-      },
-      {
-        "source": "VetResourceTest",
+        "source": "org.springframework.samples.petclinic.customers.web.PetResource",
         "type": "field",
-        "target": "MockMvc"
+        "target": "org.springframework.samples.petclinic.customers.web.Logger"
       },
       {
-        "source": "VetResourceTest",
+        "source": "org.springframework.samples.petclinic.customers.web.PetResource",
         "type": "field",
-        "target": "VetRepository"
+        "target": "org.springframework.samples.petclinic.customers.web.PetRepository"
       },
       {
-        "source": "VetResourceTest",
-        "type": "class_annotation",
-        "target": "ExtendWith"
-      },
-      {
-        "source": "VetResourceTest",
-        "type": "class_annotation",
-        "target": "WebMvcTest"
-      },
-      {
-        "source": "VetResourceTest",
-        "type": "class_annotation",
-        "target": "ActiveProfiles"
-      },
-      {
-        "source": "VetResource",
+        "source": "org.springframework.samples.petclinic.customers.web.PetResource",
         "type": "field",
-        "target": "VetRepository"
+        "target": "org.springframework.samples.petclinic.customers.web.OwnerRepository"
       },
       {
-        "source": "VetResource",
+        "source": "org.springframework.samples.petclinic.customers.web.PetResource",
         "type": "method_return",
-        "target": "List"
+        "target": "org.springframework.samples.petclinic.customers.web.List\u003cPetType\u003e"
       },
       {
-        "source": "VetResource",
-        "type": "class_annotation",
-        "target": "RequestMapping"
+        "source": "org.springframework.samples.petclinic.customers.web.PetResource",
+        "type": "method_return",
+        "target": "org.springframework.samples.petclinic.customers.web.Pet"
       },
       {
-        "source": "VetResource",
-        "type": "class_annotation",
-        "target": "RestController"
-      },
-      {
-        "source": "VetsServiceApplication",
+        "source": "org.springframework.samples.petclinic.customers.web.PetResource",
         "type": "method_parameter",
-        "target": "String"
+        "target": "org.springframework.samples.petclinic.customers.web.PetRequest"
       },
       {
-        "source": "VetsServiceApplication",
-        "type": "class_annotation",
-        "target": "EnableDiscoveryClient"
-      },
-      {
-        "source": "VetsServiceApplication",
-        "type": "class_annotation",
-        "target": "SpringBootApplication"
-      },
-      {
-        "source": "VetsServiceApplication",
-        "type": "class_annotation",
-        "target": "EnableConfigurationProperties"
-      },
-      {
-        "source": "CacheConfig",
-        "type": "class_annotation",
-        "target": "Configuration"
-      },
-      {
-        "source": "CacheConfig",
-        "type": "class_annotation",
-        "target": "EnableCaching"
-      },
-      {
-        "source": "CacheConfig",
-        "type": "class_annotation",
-        "target": "Profile"
-      },
-      {
-        "source": "Vet",
-        "type": "field",
-        "target": "Integer"
-      },
-      {
-        "source": "Vet",
-        "type": "field",
-        "target": "String"
-      },
-      {
-        "source": "Vet",
-        "type": "field",
-        "target": "Set"
-      },
-      {
-        "source": "Vet",
+        "source": "org.springframework.samples.petclinic.customers.web.PetResource",
         "type": "method_return",
-        "target": "List"
+        "target": "org.springframework.samples.petclinic.customers.web.PetDetails"
       },
       {
-        "source": "Vet",
+        "source": "org.springframework.samples.petclinic.customers.web.mapper.OwnerEntityMapper",
+        "type": "method_return",
+        "target": "org.springframework.samples.petclinic.customers.web.mapper.Owner"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.customers.web.mapper.OwnerEntityMapper",
         "type": "method_parameter",
-        "target": "Specialty"
+        "target": "org.springframework.samples.petclinic.customers.web.mapper.OwnerRequest"
       },
       {
-        "source": "Vet",
-        "type": "class_annotation",
-        "target": "Entity"
-      },
-      {
-        "source": "Vet",
-        "type": "class_annotation",
-        "target": "Table"
-      },
-      {
-        "source": "Specialty",
+        "source": "org.springframework.samples.petclinic.customers.web.OwnerResource",
         "type": "field",
-        "target": "Integer"
+        "target": "org.springframework.samples.petclinic.customers.web.Logger"
       },
       {
-        "source": "Specialty",
+        "source": "org.springframework.samples.petclinic.customers.web.OwnerResource",
         "type": "field",
-        "target": "String"
+        "target": "org.springframework.samples.petclinic.customers.web.OwnerRepository"
       },
       {
-        "source": "Specialty",
-        "type": "class_annotation",
-        "target": "Entity"
+        "source": "org.springframework.samples.petclinic.customers.web.OwnerResource",
+        "type": "field",
+        "target": "org.springframework.samples.petclinic.customers.web.OwnerEntityMapper"
       },
       {
-        "source": "Specialty",
-        "type": "class_annotation",
-        "target": "Table"
-      },
-      {
-        "source": "VetRepository",
-        "type": "extends",
-        "target": "JpaRepository"
-      },
-      {
-        "source": "CircuitBreakerConfiguration",
+        "source": "org.springframework.samples.petclinic.customers.web.OwnerResource",
         "type": "method_return",
-        "target": "CircuitBreakerRegistry"
+        "target": "org.springframework.samples.petclinic.customers.web.Owner"
       },
       {
-        "source": "CircuitBreakerConfiguration",
-        "type": "method_return",
-        "target": "TimeLimiterRegistry"
-      },
-      {
-        "source": "CircuitBreakerConfiguration",
-        "type": "method_return",
-        "target": "Resilience4JConfigurationProperties"
-      },
-      {
-        "source": "CircuitBreakerConfiguration",
-        "type": "class_annotation",
-        "target": "Configuration"
-      },
-      {
-        "source": "ApiGatewayControllerTest",
-        "type": "field",
-        "target": "CustomersServiceClient"
-      },
-      {
-        "source": "ApiGatewayControllerTest",
-        "type": "field",
-        "target": "VisitsServiceClient"
-      },
-      {
-        "source": "ApiGatewayControllerTest",
-        "type": "field",
-        "target": "WebTestClient"
-      },
-      {
-        "source": "ApiGatewayControllerTest",
-        "type": "class_annotation",
-        "target": "ExtendWith"
-      },
-      {
-        "source": "ApiGatewayControllerTest",
-        "type": "class_annotation",
-        "target": "WebFluxTest"
-      },
-      {
-        "source": "ApiGatewayControllerTest",
-        "type": "class_annotation",
-        "target": "Import"
-      },
-      {
-        "source": "ApiGatewayApplicationTests",
-        "type": "class_annotation",
-        "target": "ActiveProfiles"
-      },
-      {
-        "source": "ApiGatewayApplicationTests",
-        "type": "class_annotation",
-        "target": "SpringBootTest"
-      },
-      {
-        "source": "VisitsServiceClientIntegrationTest",
-        "type": "field",
-        "target": "Integer"
-      },
-      {
-        "source": "VisitsServiceClientIntegrationTest",
-        "type": "field",
-        "target": "VisitsServiceClient"
-      },
-      {
-        "source": "VisitsServiceClientIntegrationTest",
-        "type": "field",
-        "target": "MockWebServer"
-      },
-      {
-        "source": "VisitsServiceClientIntegrationTest",
+        "source": "org.springframework.samples.petclinic.customers.web.OwnerResource",
         "type": "method_parameter",
-        "target": "Visits"
+        "target": "org.springframework.samples.petclinic.customers.web.OwnerRequest"
       },
       {
-        "source": "VisitsServiceClientIntegrationTest",
+        "source": "org.springframework.samples.petclinic.customers.web.OwnerResource",
+        "type": "method_return",
+        "target": "org.springframework.samples.petclinic.customers.web.Optional\u003cOwner\u003e"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.customers.web.OwnerResource",
+        "type": "method_return",
+        "target": "org.springframework.samples.petclinic.customers.web.List\u003cOwner\u003e"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.customers.model.Pet",
+        "type": "field",
+        "target": "org.springframework.samples.petclinic.customers.model.PetType"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.customers.model.Pet",
+        "type": "field",
+        "target": "org.springframework.samples.petclinic.customers.model.Owner"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.customers.model.Owner",
+        "type": "field",
+        "target": "org.springframework.samples.petclinic.customers.model.Set\u003cPet\u003e"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.customers.model.Owner",
+        "type": "method_return",
+        "target": "org.springframework.samples.petclinic.customers.model.List\u003cPet\u003e"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.customers.model.Owner",
         "type": "method_parameter",
-        "target": "String"
+        "target": "org.springframework.samples.petclinic.customers.model.Pet"
       },
       {
-        "source": "VisitsServiceClientIntegrationTest",
+        "source": "org.springframework.samples.petclinic.visits.web.VisitResourceTest",
+        "type": "field",
+        "target": "org.springframework.samples.petclinic.visits.web.MockMvc"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.visits.web.VisitResourceTest",
+        "type": "field",
+        "target": "org.springframework.samples.petclinic.visits.web.VisitRepository"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.visits.config.MetricConfig",
+        "type": "method_return",
+        "target": "org.springframework.samples.petclinic.visits.config.MeterRegistryCustomizer\u003cMeterRegistry\u003e"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.visits.config.MetricConfig",
+        "type": "method_return",
+        "target": "org.springframework.samples.petclinic.visits.config.TimedAspect"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.visits.config.MetricConfig",
         "type": "method_parameter",
-        "target": "Consumer"
+        "target": "org.springframework.samples.petclinic.visits.config.MeterRegistry"
       },
       {
-        "source": "PetDetailsBuilder",
-        "type": "field",
-        "target": "String"
-      },
-      {
-        "source": "PetDetailsBuilder",
-        "type": "field",
-        "target": "PetType"
-      },
-      {
-        "source": "PetDetailsBuilder",
-        "type": "field",
-        "target": "List"
-      },
-      {
-        "source": "PetDetailsBuilder",
+        "source": "org.springframework.samples.petclinic.visits.model.Visit.VisitBuilder",
         "type": "method_return",
-        "target": "PetDetails"
-      },
-      {
-        "source": "OwnerDetailsBuilder",
-        "type": "field",
-        "target": "String"
-      },
-      {
-        "source": "OwnerDetailsBuilder",
-        "type": "field",
-        "target": "List"
-      },
-      {
-        "source": "OwnerDetailsBuilder",
-        "type": "method_return",
-        "target": "OwnerDetails"
-      },
-      {
-        "source": "ApiGatewayController",
-        "type": "field",
-        "target": "CustomersServiceClient"
-      },
-      {
-        "source": "ApiGatewayController",
-        "type": "field",
-        "target": "VisitsServiceClient"
-      },
-      {
-        "source": "ApiGatewayController",
-        "type": "field",
-        "target": "ReactiveCircuitBreakerFactory"
-      },
-      {
-        "source": "ApiGatewayController",
-        "type": "method_return",
-        "target": "Mono"
-      },
-      {
-        "source": "ApiGatewayController",
-        "type": "method_return",
-        "target": "Function"
-      },
-      {
-        "source": "ApiGatewayController",
-        "type": "method_parameter",
-        "target": "OwnerDetails"
-      },
-      {
-        "source": "ApiGatewayController",
-        "type": "class_annotation",
-        "target": "RestController"
-      },
-      {
-        "source": "ApiGatewayController",
-        "type": "class_annotation",
-        "target": "RequestMapping"
-      },
-      {
-        "source": "FallbackController",
-        "type": "method_return",
-        "target": "ResponseEntity"
-      },
-      {
-        "source": "FallbackController",
-        "type": "class_annotation",
-        "target": "RestController"
-      },
-      {
-        "source": "ApiGatewayApplication",
-        "type": "field",
-        "target": "Resource"
-      },
-      {
-        "source": "ApiGatewayApplication",
-        "type": "method_parameter",
-        "target": "String"
-      },
-      {
-        "source": "ApiGatewayApplication",
-        "type": "method_return",
-        "target": "RestTemplate"
-      },
-      {
-        "source": "ApiGatewayApplication",
-        "type": "method_return",
-        "target": "RouterFunction"
-      },
-      {
-        "source": "ApiGatewayApplication",
-        "type": "method_return",
-        "target": "Customizer"
-      },
-      {
-        "source": "ApiGatewayApplication",
-        "type": "class_annotation",
-        "target": "EnableDiscoveryClient"
-      },
-      {
-        "source": "ApiGatewayApplication",
-        "type": "class_annotation",
-        "target": "SpringBootApplication"
-      },
-      {
-        "source": "CustomersServiceClient",
-        "type": "method_return",
-        "target": "Mono"
-      },
-      {
-        "source": "CustomersServiceClient",
-        "type": "class_annotation",
-        "target": "Component"
-      },
-      {
-        "source": "VisitsServiceClient",
-        "type": "field",
-        "target": "String"
-      },
-      {
-        "source": "VisitsServiceClient",
-        "type": "method_return",
-        "target": "Mono"
-      },
-      {
-        "source": "VisitsServiceClient",
-        "type": "method_parameter",
-        "target": "List"
-      },
-      {
-        "source": "VisitsServiceClient",
-        "type": "class_annotation",
-        "target": "Component"
-      },
-      {
-        "source": "PetResourceTest",
-        "type": "field",
-        "target": "MockMvc"
-      },
-      {
-        "source": "PetResourceTest",
-        "type": "field",
-        "target": "PetRepository"
-      },
-      {
-        "source": "PetResourceTest",
-        "type": "field",
-        "target": "OwnerRepository"
-      },
-      {
-        "source": "PetResourceTest",
-        "type": "method_return",
-        "target": "Pet"
-      },
-      {
-        "source": "PetResourceTest",
-        "type": "class_annotation",
-        "target": "ExtendWith"
-      },
-      {
-        "source": "PetResourceTest",
-        "type": "class_annotation",
-        "target": "WebMvcTest"
-      },
-      {
-        "source": "PetResourceTest",
-        "type": "class_annotation",
-        "target": "ActiveProfiles"
-      },
-      {
-        "source": "CustomersServiceApplication",
-        "type": "method_parameter",
-        "target": "String"
-      },
-      {
-        "source": "CustomersServiceApplication",
-        "type": "class_annotation",
-        "target": "EnableDiscoveryClient"
-      },
-      {
-        "source": "CustomersServiceApplication",
-        "type": "class_annotation",
-        "target": "SpringBootApplication"
-      },
-      {
-        "source": "MetricConfig",
-        "type": "method_return",
-        "target": "MeterRegistryCustomizer"
-      },
-      {
-        "source": "MetricConfig",
-        "type": "method_return",
-        "target": "TimedAspect"
-      },
-      {
-        "source": "MetricConfig",
-        "type": "method_parameter",
-        "target": "MeterRegistry"
-      },
-      {
-        "source": "MetricConfig",
-        "type": "class_annotation",
-        "target": "Configuration"
-      },
-      {
-        "source": "ResourceNotFoundException",
-        "type": "extends",
-        "target": "RuntimeException"
-      },
-      {
-        "source": "ResourceNotFoundException",
-        "type": "class_annotation",
-        "target": "ResponseStatus"
-      },
-      {
-        "source": "PetResource",
-        "type": "field",
-        "target": "Logger"
-      },
-      {
-        "source": "PetResource",
-        "type": "field",
-        "target": "PetRepository"
-      },
-      {
-        "source": "PetResource",
-        "type": "field",
-        "target": "OwnerRepository"
-      },
-      {
-        "source": "PetResource",
-        "type": "method_return",
-        "target": "List"
-      },
-      {
-        "source": "PetResource",
-        "type": "method_return",
-        "target": "Pet"
-      },
-      {
-        "source": "PetResource",
-        "type": "method_parameter",
-        "target": "PetRequest"
-      },
-      {
-        "source": "PetResource",
-        "type": "method_return",
-        "target": "PetDetails"
-      },
-      {
-        "source": "PetResource",
-        "type": "class_annotation",
-        "target": "RestController"
-      },
-      {
-        "source": "PetResource",
-        "type": "class_annotation",
-        "target": "Timed"
-      },
-      {
-        "source": "OwnerEntityMapper",
-        "type": "implements",
-        "target": "Mapper"
-      },
-      {
-        "source": "OwnerEntityMapper",
-        "type": "method_return",
-        "target": "Owner"
-      },
-      {
-        "source": "OwnerEntityMapper",
-        "type": "method_parameter",
-        "target": "OwnerRequest"
-      },
-      {
-        "source": "OwnerEntityMapper",
-        "type": "class_annotation",
-        "target": "Component"
-      },
-      {
-        "source": "OwnerResource",
-        "type": "field",
-        "target": "Logger"
-      },
-      {
-        "source": "OwnerResource",
-        "type": "field",
-        "target": "OwnerRepository"
-      },
-      {
-        "source": "OwnerResource",
-        "type": "field",
-        "target": "OwnerEntityMapper"
-      },
-      {
-        "source": "OwnerResource",
-        "type": "method_return",
-        "target": "Owner"
-      },
-      {
-        "source": "OwnerResource",
-        "type": "method_parameter",
-        "target": "OwnerRequest"
-      },
-      {
-        "source": "OwnerResource",
-        "type": "method_return",
-        "target": "Optional"
-      },
-      {
-        "source": "OwnerResource",
-        "type": "method_return",
-        "target": "List"
-      },
-      {
-        "source": "OwnerResource",
-        "type": "class_annotation",
-        "target": "RequestMapping"
-      },
-      {
-        "source": "OwnerResource",
-        "type": "class_annotation",
-        "target": "RestController"
-      },
-      {
-        "source": "OwnerResource",
-        "type": "class_annotation",
-        "target": "Timed"
-      },
-      {
-        "source": "Pet",
-        "type": "field",
-        "target": "Integer"
-      },
-      {
-        "source": "Pet",
-        "type": "field",
-        "target": "String"
-      },
-      {
-        "source": "Pet",
-        "type": "field",
-        "target": "Date"
-      },
-      {
-        "source": "Pet",
-        "type": "field",
-        "target": "PetType"
-      },
-      {
-        "source": "Pet",
-        "type": "field",
-        "target": "Owner"
-      },
-      {
-        "source": "Pet",
-        "type": "method_parameter",
-        "target": "Object"
-      },
-      {
-        "source": "Pet",
-        "type": "class_annotation",
-        "target": "Entity"
-      },
-      {
-        "source": "Pet",
-        "type": "class_annotation",
-        "target": "Table"
-      },
-      {
-        "source": "PetRepository",
-        "type": "extends",
-        "target": "JpaRepository"
-      },
-      {
-        "source": "OwnerRepository",
-        "type": "extends",
-        "target": "JpaRepository"
-      },
-      {
-        "source": "Owner",
-        "type": "field",
-        "target": "Integer"
-      },
-      {
-        "source": "Owner",
-        "type": "field",
-        "target": "String"
-      },
-      {
-        "source": "Owner",
-        "type": "field",
-        "target": "Set"
-      },
-      {
-        "source": "Owner",
-        "type": "method_return",
-        "target": "List"
-      },
-      {
-        "source": "Owner",
-        "type": "method_parameter",
-        "target": "Pet"
-      },
-      {
-        "source": "Owner",
-        "type": "class_annotation",
-        "target": "Entity"
-      },
-      {
-        "source": "Owner",
-        "type": "class_annotation",
-        "target": "Table"
-      },
-      {
-        "source": "PetType",
-        "type": "field",
-        "target": "Integer"
-      },
-      {
-        "source": "PetType",
-        "type": "field",
-        "target": "String"
-      },
-      {
-        "source": "PetType",
-        "type": "class_annotation",
-        "target": "Entity"
-      },
-      {
-        "source": "PetType",
-        "type": "class_annotation",
-        "target": "Table"
-      },
-      {
-        "source": "VisitResourceTest",
-        "type": "field",
-        "target": "MockMvc"
-      },
-      {
-        "source": "VisitResourceTest",
-        "type": "field",
-        "target": "VisitRepository"
-      },
-      {
-        "source": "VisitResourceTest",
-        "type": "class_annotation",
-        "target": "ExtendWith"
-      },
-      {
-        "source": "VisitResourceTest",
-        "type": "class_annotation",
-        "target": "WebMvcTest"
-      },
-      {
-        "source": "VisitResourceTest",
-        "type": "class_annotation",
-        "target": "ActiveProfiles"
-      },
-      {
-        "source": "VisitResource",
-        "type": "field",
-        "target": "Logger"
-      },
-      {
-        "source": "VisitResource",
-        "type": "field",
-        "target": "VisitRepository"
-      },
-      {
-        "source": "VisitResource",
-        "type": "method_return",
-        "target": "Visit"
-      },
-      {
-        "source": "VisitResource",
-        "type": "method_return",
-        "target": "List"
-      },
-      {
-        "source": "VisitResource",
-        "type": "method_return",
-        "target": "Visits"
-      },
-      {
-        "source": "VisitResource",
-        "type": "class_annotation",
-        "target": "RestController"
-      },
-      {
-        "source": "VisitResource",
-        "type": "class_annotation",
-        "target": "Timed"
-      },
-      {
-        "source": "VisitRepository",
-        "type": "extends",
-        "target": "JpaRepository"
-      },
-      {
-        "source": "Visit",
-        "type": "field",
-        "target": "Integer"
-      },
-      {
-        "source": "Visit",
-        "type": "field",
-        "target": "Date"
-      },
-      {
-        "source": "Visit",
-        "type": "field",
-        "target": "String"
-      },
-      {
-        "source": "Visit",
-        "type": "class_annotation",
-        "target": "Entity"
-      },
-      {
-        "source": "Visit",
-        "type": "class_annotation",
-        "target": "Table"
-      },
-      {
-        "source": "VisitBuilder",
-        "type": "field",
-        "target": "Integer"
-      },
-      {
-        "source": "VisitBuilder",
-        "type": "field",
-        "target": "Date"
-      },
-      {
-        "source": "VisitBuilder",
-        "type": "field",
-        "target": "String"
-      },
-      {
-        "source": "VisitBuilder",
-        "type": "method_return",
-        "target": "Visit"
-      },
-      {
-        "source": "VisitsServiceApplication",
-        "type": "method_parameter",
-        "target": "String"
-      },
-      {
-        "source": "VisitsServiceApplication",
-        "type": "class_annotation",
-        "target": "EnableDiscoveryClient"
-      },
-      {
-        "source": "VisitsServiceApplication",
-        "type": "class_annotation",
-        "target": "SpringBootApplication"
+        "target": "org.springframework.samples.petclinic.visits.model.Visit"
       }
     ]
   }

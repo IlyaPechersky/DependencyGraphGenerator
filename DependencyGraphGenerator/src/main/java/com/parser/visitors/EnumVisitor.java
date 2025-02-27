@@ -13,7 +13,7 @@ public class EnumVisitor extends VoidVisitorAdapter<Void> {
 
     @Override
     public void visit(EnumDeclaration n, Void arg) {
-        String enumName = n.getNameAsString();
+        String enumName = n.getFullyQualifiedName().orElse(n.getNameAsString());
         graphData.addNode(enumName, "enum");
 
         // Реализация интерфейсов (implements)

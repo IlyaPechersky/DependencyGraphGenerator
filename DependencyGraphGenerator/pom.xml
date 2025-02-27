@@ -8,6 +8,8 @@
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <!-- Указываем единую версию для JavaParser и Symbol Solver -->
+        <javaparser.version>3.25.9</javaparser.version>
     </properties>
     <dependencies>
         <dependency>
@@ -20,20 +22,27 @@
             <artifactId>jgrapht-ext</artifactId>
             <version>1.5.2</version>
         </dependency>
+        <!-- Обновлённые зависимости JavaParser -->
         <dependency>
             <groupId>com.github.javaparser</groupId>
             <artifactId>javaparser-core</artifactId>
-            <version>3.25.9</version>
+            <version>${javaparser.version}</version>
+        </dependency>
+        <!-- Используем правильный артефакт символового солвера -->
+        <dependency>
+            <groupId>com.github.javaparser</groupId>
+            <artifactId>javaparser-symbol-solver-core</artifactId>
+            <version>${javaparser.version}</version>
         </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
-            <version>2.10.1</version> <!-- Check for the latest version -->
+            <version>2.10.1</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.13.2</version> <!-- Check for the latest version -->
+            <version>4.13.2</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -42,7 +51,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.3.0</version>
+                <version>3.6.0</version>
                 <configuration>
                     <archive>
                         <manifest>
