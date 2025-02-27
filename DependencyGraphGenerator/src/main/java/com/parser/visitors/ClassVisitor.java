@@ -3,6 +3,11 @@ package com.parser.visitors;
 import com.parser.model.GraphData;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
+import com.github.javaparser.ast.type.Type;
+import com.github.javaparser.ast.Node;
+
+import java.util.Optional;
+
 
 public class ClassVisitor extends VoidVisitorAdapter<Void> {
     private final GraphData graphData;
@@ -11,31 +16,48 @@ public class ClassVisitor extends VoidVisitorAdapter<Void> {
         this.graphData = graphData;
     }
 
-    private String getRawType(String typeName) {
-        return typeName
-            .replaceAll("<.*>", "") // Удаляем generics
-            .replaceAll("\\[\\]", "") // Удаляем массивы
-            .replaceAll("@.*", "") // Удаляем аннотации
-            .trim();
+    private String resolveFullTypeName(Type type) {
+        try {
+            return type.resolve().describe();
+        } catch (Exception e) {
+            System.err.println("Failed to resolve type: " + type + ". Error: " + e.getMessage());
+            return extractPackageFromContext(type) + type.asString();
+        }
+    }
+
+    private String extractPackageFromContext(Type type) {
+        Optional<Node> parentNode = type.getParentNode();
+        
+        if (parentNode.isPresent()) {
+            Optional<ClassOrInterfaceDeclaration> container = parentNode.get().findAncestor(ClassOrInterfaceDeclaration.class);
+            
+            if (container.isPresent()) {
+                String containerName = container.get().getFullyQualifiedName().orElse("");
+                int lastDot = containerName.lastIndexOf('.');
+                return lastDot > 0 ? containerName.substring(0, lastDot) + "." : "";
+            }
+        }
+        return "unknown.package.";
     }
 
     @Override
     public void visit(ClassOrInterfaceDeclaration n, Void arg) {
         if (n.isInterface()) return;
 
-        String className = n.getNameAsString();
+        String className = n.getFullyQualifiedName().orElse(n.getNameAsString());
+        System.out.println("!!!!!!!!! " + className);
         graphData.addNode(className, "class");
 
         // Наследование (extends)
         n.getExtendedTypes().forEach(type -> {
-            String parent = type.getNameAsString();
+            String parent = resolveFullTypeName(type);
             graphData.addNode(parent, "class");
             graphData.addEdge(className, parent, "extends");
         });
 
         // Реализация интерфейсов (implements)
         n.getImplementedTypes().forEach(type -> {
-            String interfaceName = type.getNameAsString();
+            String interfaceName = resolveFullTypeName(type);
             graphData.addNode(interfaceName, "interface");
             graphData.addEdge(className, interfaceName, "implements");
         });
@@ -43,7 +65,7 @@ public class ClassVisitor extends VoidVisitorAdapter<Void> {
         // Fields
         n.getFields().forEach(field -> {
             field.getVariables().forEach(variable -> {
-                String fieldType = getRawType(variable.getTypeAsString());
+                String fieldType = resolveFullTypeName(variable.getType());
                 graphData.addNode(fieldType, "unknown");
                 graphData.addEdge(className, fieldType, "field");
             });
@@ -53,14 +75,14 @@ public class ClassVisitor extends VoidVisitorAdapter<Void> {
         n.getMethods().forEach(method -> {
             // Return type
             if (method.getType() != null) {
-                String returnType = getRawType(method.getType().toString());
+                String returnType = resolveFullTypeName(method.getType());
                 graphData.addNode(returnType, "unknown");
                 graphData.addEdge(className, returnType, "method_return");
             }
 
             // Parameters
             method.getParameters().forEach(param -> {
-                String paramType = getRawType(param.getType().asString());
+                String paramType = resolveFullTypeName(param.getType());
                 graphData.addNode(paramType, "unknown");
                 graphData.addEdge(className, paramType, "method_parameter");
             });
@@ -68,7 +90,7 @@ public class ClassVisitor extends VoidVisitorAdapter<Void> {
 
         // Annotations
         n.getAnnotations().forEach(annotation -> {
-            String annotationType = getRawType(annotation.getNameAsString());
+            String annotationType = annotation.getNameAsString();
             graphData.addNode(annotationType, "annotation");
             graphData.addEdge(className, annotationType, "class_annotation");
         });

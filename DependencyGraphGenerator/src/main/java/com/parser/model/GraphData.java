@@ -13,8 +13,10 @@ public class GraphData {
     private final Graph<String, DefaultEdge> graph;
     private final Map<String, String> nodeTypes;
     private final Map<DefaultEdge, String> edgeTypes;
+    private final String projectPackagePrefix;
 
-    public GraphData() {
+    public GraphData(String projectPackagePrefix) {
+        this.projectPackagePrefix = projectPackagePrefix;
         this.graph = new DefaultDirectedGraph<>(DefaultEdge.class);
         this.nodeTypes = new HashMap<>();
         this.edgeTypes = new HashMap<>();
@@ -31,7 +33,8 @@ public class GraphData {
     }
 
     public void addEdge(String source, String target, String edgeType) {
-        if (source.equals(target) || source.contains(".") || target.contains(".") || !isProjectClass(target)) {
+        System.out.println("!!" + source + " " + target + " " + edgeType);
+        if (source.equals(target) || !isProjectClass(source) || !isProjectClass(target)) {
             return;
         }
         if (!graph.containsVertex(source) || !graph.containsVertex(target)) {
@@ -44,7 +47,8 @@ public class GraphData {
     }
 
     private boolean isProjectClass(String className) {
-        return !className.matches("^(java|javax|sun|com.sun).*");
+        return className.startsWith(projectPackagePrefix) 
+            && !className.matches("^(java|javax|sun|com.sun).*");
     }
 
     public Map<String, Object> toJson() {
@@ -75,5 +79,9 @@ public class GraphData {
 
     public Graph<String, DefaultEdge> getGraph() {
         return graph;
+    }
+
+    public String getProjectPackage() {
+        return projectPackagePrefix;
     }
 }

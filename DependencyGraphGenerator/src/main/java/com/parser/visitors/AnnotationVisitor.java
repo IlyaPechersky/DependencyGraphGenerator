@@ -13,7 +13,7 @@ public class AnnotationVisitor extends VoidVisitorAdapter<Void> {
 
     @Override
     public void visit(AnnotationDeclaration n, Void arg) {
-        String annotationName = n.getNameAsString();
+        String annotationName = n.getFullyQualifiedName().orElse(n.getNameAsString());
         graphData.addNode(annotationName, "annotation");
 
         super.visit(n, arg);
