@@ -33,7 +33,6 @@ public class GraphData {
     }
 
     public void addEdge(String source, String target, String edgeType) {
-        System.out.println("!!" + source + " " + target + " " + edgeType);
         if (source.equals(target) || !isProjectClass(source) || !isProjectClass(target)) {
             return;
         }

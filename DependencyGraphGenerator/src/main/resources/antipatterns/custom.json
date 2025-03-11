@@ -1,39 +1,72 @@
 {
-"name": "CustomAntiPattern",
-"checks": [
+    "name": "Advanced Architecture Anti-Patterns",
+    "description": "Конфигурация для обнаружения антипаттернов на основе метрик теории графов",
+    "checks": [
         {
-            "type": "CYCLE",
+            "type": "Cycles",
+            "topology": "cycle",
+            "description": "Наличие циклов в графе зависимостей. Формально: существует путь v1 → v2 → ... → vn → v1.",
             "params": {}
         },
         {
-            "type": "GOD_CLASS",
+            "type": "God classes",
+            "topology": "pagerank",
+            "description": "Класс с аномально высоким PageRank. Формально: PR(v) > threshold * max(PR), где PR — влияние через входящие связи.",
             "params": {
-                "threshold": 0.01
+                "threshold": {
+                    "value": 0.01,
+                    "description": "Порог относительно максимального значения PageRank (0.0-1.0)"
+                }
             }
         },
         {
-            "type": "BOTTLENECK",
+            "type": "Bottlenecks",
+            "topology": "betweenness",
+            "description": "Узел, через который проходит большинство кратчайших путей. Формально: C_B(v) > threshold * max(C_B), где C_B — центральность по посредничеству.",
             "params": {
-                "threshold": 0.1
+                "threshold": {
+                    "value": 0.1,
+                    "description": "Нормированное значение центральности (0.0-1.0)"
+                }
             }
         },
         {
-            "type": "SERVICE_CHAIN",
+            "type": "Service chains",
+            "topology": "bamboo",
+            "description": "Линейная цепочка зависимостей. Формально: путь v1 → v2 → ... → vn, где n > max_length.",
             "params": {
-                "maxChainLength": 5
+                "max_length": {
+                    "value": 7,
+                    "description": "Максимально допустимая длина цепочки"
+                }
             }
         },
         {
-            "type": "HUB_LIKE_DEPENDENCY",
+            "type": "Hub-like dependency",
+            "topology": "degree",
+            "description": "Узел с чрезмерным количеством связей. Формально: deg(v) = in_degree(v) + out_degree(v) ≥ min_connections.",
             "params": {
-                "minDependencies": 10
+                "max_degree": {
+                    "value": 15,
+                    "description": "Максимально допустимое суммарное количество входящих/исходящих связей"
+                }
             }
         },
         {
-            "type": "CHATTY_SERVICE",
+            "type": "Chatty services",
+            "topology": "out_degree",
+            "description": "Сервис с чрезмерными исходящими зависимостями. Формально: out_degree(v) ≥ min_messages.",
             "params": {
-                "minMessages": 20
+                "min_out_degree": {
+                    "value": 20,
+                    "description": "Максимально допустимое количество исходящих связей"
+                }
             }
         }
-    ]
+    ],
+    "metrics_reference": {
+        "pagerank": "PR(v) = (1-d)/N + d * Σ(PR(u)/L(u)) для u ∈ B(v)",
+        "betweenness_centrality": "C_B(v) = Σ(σ_st(v)/σ_st) для s ≠ v ≠ t",
+        "degree_centrality": "deg(v) = in_degree(v) + out_degree(v)"
+    }
 }
