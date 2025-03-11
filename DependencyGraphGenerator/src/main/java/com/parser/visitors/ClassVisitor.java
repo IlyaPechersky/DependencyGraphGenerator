@@ -45,7 +45,6 @@ public class ClassVisitor extends VoidVisitorAdapter<Void> {
         if (n.isInterface()) return;
 
         String className = n.getFullyQualifiedName().orElse(n.getNameAsString());
-        System.out.println("!!!!!!!!! " + className);
         graphData.addNode(className, "class");
 
         // Наследование (extends)

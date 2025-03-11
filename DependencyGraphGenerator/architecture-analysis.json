@@ -1,12 +1,6 @@
 {
   "architectureAnalysis": {
-    "chattyServices": {},
-    "bottlenecks": {
-      "org.springframework.samples.petclinic.api.application.VisitsServiceClient": 1,
-      "org.springframework.samples.petclinic.customers.model.Pet": 0.5,
-      "org.springframework.samples.petclinic.customers.model.Owner": 1
-    },
-    "cycles": [
+    "Cycles": [
       [
         "org.springframework.samples.petclinic.customers.model.Owner"
       ],
@@ -14,9 +8,21 @@
         "org.springframework.samples.petclinic.customers.model.Pet"
       ]
     ],
-    "hubLikeDependencies": {},
-    "serviceChains": {
+    "God classes": {
+      "org.springframework.samples.petclinic.api.application.WebClient.Builder": 0.01,
+      "org.springframework.samples.petclinic.visits.model.Visit": 0.01,
+      "org.springframework.samples.petclinic.api.boundary.web.ResponseEntity\u003cString\u003e": 0.01,
+      "org.springframework.samples.petclinic.vets.web.VetRepository": 0.01
+    },
+    "Bottlenecks": {
+      "org.springframework.samples.petclinic.api.application.VisitsServiceClient": 1,
+      "org.springframework.samples.petclinic.customers.model.Owner": 1,
+      "org.springframework.samples.petclinic.customers.model.Pet": 0.5
+    },
+    "Service chains": {
       "org.springframework.samples.petclinic.customers.model.Owner": [
+        "org.springframework.samples.petclinic.customers.model.Pet",
+        "org.springframework.samples.petclinic.customers.model.Owner",
         "org.springframework.samples.petclinic.customers.model.Pet",
         "org.springframework.samples.petclinic.customers.model.Owner",
         "org.springframework.samples.petclinic.customers.model.Pet",
@@ -31,10 +37,14 @@
         "org.springframework.samples.petclinic.customers.model.Owner",
         "org.springframework.samples.petclinic.customers.model.Pet",
         "org.springframework.samples.petclinic.customers.model.Owner",
+        "org.springframework.samples.petclinic.customers.model.Pet",
+        "org.springframework.samples.petclinic.customers.model.Owner",
         "org.springframework.samples.petclinic.customers.model.Set\u003cPet\u003e",
         "org.springframework.samples.petclinic.customers.model.List\u003cPet\u003e"
       ],
       "org.springframework.samples.petclinic.customers.model.Set\u003cPet\u003e": [
+        "org.springframework.samples.petclinic.customers.model.Owner",
+        "org.springframework.samples.petclinic.customers.model.Pet",
         "org.springframework.samples.petclinic.customers.model.Owner",
         "org.springframework.samples.petclinic.customers.model.Pet",
         "org.springframework.samples.petclinic.customers.model.Owner",
@@ -48,9 +58,13 @@
         "org.springframework.samples.petclinic.customers.model.Pet",
         "org.springframework.samples.petclinic.customers.model.Owner",
         "org.springframework.samples.petclinic.customers.model.Pet",
+        "org.springframework.samples.petclinic.customers.model.Owner",
+        "org.springframework.samples.petclinic.customers.model.Pet",
         "org.springframework.samples.petclinic.customers.model.PetType"
       ],
       "org.springframework.samples.petclinic.customers.model.Pet": [
+        "org.springframework.samples.petclinic.customers.model.Owner",
+        "org.springframework.samples.petclinic.customers.model.Pet",
         "org.springframework.samples.petclinic.customers.model.Owner",
         "org.springframework.samples.petclinic.customers.model.Pet",
         "org.springframework.samples.petclinic.customers.model.Owner",
@@ -61,12 +75,8 @@
         "org.springframework.samples.petclinic.customers.model.Pet"
       ]
     },
-    "godClasses": {
-      "org.springframework.samples.petclinic.api.application.WebClient.Builder": 0.01,
-      "org.springframework.samples.petclinic.visits.model.Visit": 0.01,
-      "org.springframework.samples.petclinic.api.boundary.web.ResponseEntity\u003cString\u003e": 0.01,
-      "org.springframework.samples.petclinic.vets.web.VetRepository": 0.01
-    }
+    "Hub-like dependency": {},
+    "Chatty services": {}
   },
   "dependencyGraph": {
     "nodes": [
