@@ -9,13 +9,13 @@ import java.util.*;
 
 public class CycleDetectorImpl extends BaseDetector implements TopologyDetector {
     @Override
-    public List<List<String>> detect(Graph<String, DefaultEdge> graph, Map<String, Object> params) {
+    public List<String> detect(Graph<String, DefaultEdge> graph, Map<String, Object> params) {
         CycleDetector<String, DefaultEdge> detector = new CycleDetector<>(graph);
-        List<List<String>> cycles = new ArrayList<>();
+        List<String> cycles = new ArrayList<>();
         
         if (detector.detectCycles()) {
             detector.findCycles().forEach(cycle -> 
-                cycles.add(Collections.singletonList(cycle)));
+                cycles.add(cycle));
         }
         return cycles;
     }
