@@ -1,9 +1,29 @@
 {
   "architectureAnalysis": {
-    "Cycles": [
-      "org.springframework.samples.petclinic.customers.model.Owner",
-      "org.springframework.samples.petclinic.customers.model.Pet"
-    ],
+    "Cycles": {
+      "Cycle 1": [
+        [
+          "org.springframework.samples.petclinic.customers.model.Owner",
+          "org.springframework.samples.petclinic.customers.model.Pet",
+          "method_parameter"
+        ],
+        [
+          "org.springframework.samples.petclinic.customers.model.Pet",
+          "org.springframework.samples.petclinic.customers.model.Owner",
+          "field"
+        ],
+        [
+          "org.springframework.samples.petclinic.customers.model.Pet",
+          "org.springframework.samples.petclinic.customers.model.Owner",
+          "method_return"
+        ],
+        [
+          "org.springframework.samples.petclinic.customers.model.Pet",
+          "org.springframework.samples.petclinic.customers.model.Owner",
+          "method_parameter"
+        ]
+      ]
+    },
     "God classes": {
       "org.springframework.samples.petclinic.api.application.WebClient.Builder": 0.01,
       "org.springframework.samples.petclinic.visits.model.Visit": 0.01,
@@ -16,59 +36,27 @@
       "org.springframework.samples.petclinic.customers.model.Pet": 0.5
     },
     "Service chains": {
-      "org.springframework.samples.petclinic.customers.model.Owner": [
-        "org.springframework.samples.petclinic.customers.model.Pet",
-        "org.springframework.samples.petclinic.customers.model.Owner",
-        "org.springframework.samples.petclinic.customers.model.Pet",
-        "org.springframework.samples.petclinic.customers.model.Owner",
-        "org.springframework.samples.petclinic.customers.model.Pet",
-        "org.springframework.samples.petclinic.customers.model.Owner",
-        "org.springframework.samples.petclinic.customers.model.Pet",
-        "org.springframework.samples.petclinic.customers.model.PetType",
-        "org.springframework.samples.petclinic.customers.model.Owner"
-      ],
-      "org.springframework.samples.petclinic.customers.model.List\u003cPet\u003e": [
-        "org.springframework.samples.petclinic.customers.model.Owner",
-        "org.springframework.samples.petclinic.customers.model.Pet",
-        "org.springframework.samples.petclinic.customers.model.Owner",
-        "org.springframework.samples.petclinic.customers.model.Pet",
-        "org.springframework.samples.petclinic.customers.model.Owner",
-        "org.springframework.samples.petclinic.customers.model.Pet",
-        "org.springframework.samples.petclinic.customers.model.Owner",
-        "org.springframework.samples.petclinic.customers.model.Set\u003cPet\u003e",
-        "org.springframework.samples.petclinic.customers.model.List\u003cPet\u003e"
-      ],
-      "org.springframework.samples.petclinic.customers.model.Set\u003cPet\u003e": [
-        "org.springframework.samples.petclinic.customers.model.Owner",
-        "org.springframework.samples.petclinic.customers.model.Pet",
-        "org.springframework.samples.petclinic.customers.model.Owner",
-        "org.springframework.samples.petclinic.customers.model.Pet",
-        "org.springframework.samples.petclinic.customers.model.Owner",
-        "org.springframework.samples.petclinic.customers.model.Pet",
-        "org.springframework.samples.petclinic.customers.model.Owner",
-        "org.springframework.samples.petclinic.customers.model.Set\u003cPet\u003e"
-      ],
-      "org.springframework.samples.petclinic.customers.model.PetType": [
-        "org.springframework.samples.petclinic.customers.model.Pet",
-        "org.springframework.samples.petclinic.customers.model.Owner",
-        "org.springframework.samples.petclinic.customers.model.Pet",
-        "org.springframework.samples.petclinic.customers.model.Owner",
-        "org.springframework.samples.petclinic.customers.model.Pet",
-        "org.springframework.samples.petclinic.customers.model.Owner",
-        "org.springframework.samples.petclinic.customers.model.Pet",
-        "org.springframework.samples.petclinic.customers.model.PetType"
-      ],
-      "org.springframework.samples.petclinic.customers.model.Pet": [
-        "org.springframework.samples.petclinic.customers.model.Owner",
-        "org.springframework.samples.petclinic.customers.model.Pet",
-        "org.springframework.samples.petclinic.customers.model.Owner",
-        "org.springframework.samples.petclinic.customers.model.Pet",
-        "org.springframework.samples.petclinic.customers.model.Owner",
-        "org.springframework.samples.petclinic.customers.model.Pet",
-        "org.springframework.samples.petclinic.customers.model.Owner",
-        "org.springframework.samples.petclinic.customers.model.Set\u003cPet\u003e",
-        "org.springframework.samples.petclinic.customers.model.List\u003cPet\u003e",
-        "org.springframework.samples.petclinic.customers.model.Pet"
+      "Chain--1948439031": [
+        [
+          "org.springframework.samples.petclinic.customers.model.Pet",
+          "org.springframework.samples.petclinic.customers.model.Owner",
+          "field"
+        ],
+        [
+          "org.springframework.samples.petclinic.customers.model.Owner",
+          "org.springframework.samples.petclinic.customers.model.Pet",
+          "method_parameter"
+        ],
+        [
+          "org.springframework.samples.petclinic.customers.model.Pet",
+          "org.springframework.samples.petclinic.customers.model.Owner",
+          "method_return"
+        ],
+        [
+          "org.springframework.samples.petclinic.customers.model.Owner",
+          "org.springframework.samples.petclinic.customers.model.Collection\u003c*\u003e",
+          "field"
+        ]
       ]
     },
     "Hub-like dependency": {},
@@ -781,6 +769,11 @@
       {
         "source": "org.springframework.samples.petclinic.vets.model.Vet",
         "type": "method_return",
+        "target": "org.springframework.samples.petclinic.vets.model.Set\u003cSpecialty\u003e"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.vets.model.Vet",
+        "type": "method_return",
         "target": "org.springframework.samples.petclinic.vets.model.List\u003cSpecialty\u003e"
       },
       {
@@ -990,12 +983,42 @@
       },
       {
         "source": "org.springframework.samples.petclinic.customers.web.PetResource",
+        "type": "method_parameter",
+        "target": "org.springframework.samples.petclinic.customers.web.PetRequest"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.customers.web.PetResource",
+        "type": "method_return",
+        "target": "org.springframework.samples.petclinic.customers.web.Pet"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.customers.web.PetResource",
+        "type": "method_parameter",
+        "target": "org.springframework.samples.petclinic.customers.web.Pet"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.customers.web.PetResource",
+        "type": "method_parameter",
+        "target": "org.springframework.samples.petclinic.customers.web.PetRequest"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.customers.web.PetResource",
         "type": "method_return",
         "target": "org.springframework.samples.petclinic.customers.web.PetDetails"
       },
       {
+        "source": "org.springframework.samples.petclinic.customers.web.PetResource",
+        "type": "method_return",
+        "target": "org.springframework.samples.petclinic.customers.web.Pet"
+      },
+      {
         "source": "org.springframework.samples.petclinic.customers.web.mapper.OwnerEntityMapper",
         "type": "method_return",
+        "target": "org.springframework.samples.petclinic.customers.web.mapper.Owner"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.customers.web.mapper.OwnerEntityMapper",
+        "type": "method_parameter",
         "target": "org.springframework.samples.petclinic.customers.web.mapper.Owner"
       },
       {
@@ -1039,6 +1062,11 @@
         "target": "org.springframework.samples.petclinic.customers.web.List\u003cOwner\u003e"
       },
       {
+        "source": "org.springframework.samples.petclinic.customers.web.OwnerResource",
+        "type": "method_parameter",
+        "target": "org.springframework.samples.petclinic.customers.web.OwnerRequest"
+      },
+      {
         "source": "org.springframework.samples.petclinic.customers.model.Pet",
         "type": "field",
         "target": "org.springframework.samples.petclinic.customers.model.PetType"
@@ -1049,8 +1077,33 @@
         "target": "org.springframework.samples.petclinic.customers.model.Owner"
       },
       {
+        "source": "org.springframework.samples.petclinic.customers.model.Pet",
+        "type": "method_return",
+        "target": "org.springframework.samples.petclinic.customers.model.PetType"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.customers.model.Pet",
+        "type": "method_return",
+        "target": "org.springframework.samples.petclinic.customers.model.Owner"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.customers.model.Pet",
+        "type": "method_parameter",
+        "target": "org.springframework.samples.petclinic.customers.model.PetType"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.customers.model.Pet",
+        "type": "method_parameter",
+        "target": "org.springframework.samples.petclinic.customers.model.Owner"
+      },
+      {
         "source": "org.springframework.samples.petclinic.customers.model.Owner",
         "type": "field",
+        "target": "org.springframework.samples.petclinic.customers.model.Set\u003cPet\u003e"
+      },
+      {
+        "source": "org.springframework.samples.petclinic.customers.model.Owner",
+        "type": "method_return",
         "target": "org.springframework.samples.petclinic.customers.model.Set\u003cPet\u003e"
       },
       {

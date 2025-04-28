@@ -1,7 +1,7 @@
 package com.parser.model;
 
 import org.jgrapht.Graph;
-import org.jgrapht.graph.DefaultDirectedGraph;
+import org.jgrapht.graph.DirectedMultigraph;
 import org.jgrapht.graph.DefaultEdge;
 
 import java.util.HashMap;
@@ -17,7 +17,7 @@ public class GraphData {
 
     public GraphData(String projectPackagePrefix) {
         this.projectPackagePrefix = projectPackagePrefix;
-        this.graph = new DefaultDirectedGraph<>(DefaultEdge.class);
+        this.graph = new DirectedMultigraph<>(DefaultEdge.class);
         this.nodeTypes = new HashMap<>();
         this.edgeTypes = new HashMap<>();
     }
@@ -78,6 +78,10 @@ public class GraphData {
 
     public Graph<String, DefaultEdge> getGraph() {
         return graph;
+    }
+    
+    public Map<DefaultEdge, String> getEdgeTypes() {
+        return edgeTypes;
     }
 
     public String getProjectPackage() {
