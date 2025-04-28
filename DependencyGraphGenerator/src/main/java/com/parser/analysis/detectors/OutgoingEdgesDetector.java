@@ -1,32 +1,39 @@
 package com.parser.analysis.detectors;
 
 import com.parser.analysis.TopologyDetector;
+import com.parser.model.GraphData;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
 import java.util.*;
-import java.util.stream.*;
-
+import java.util.stream.Collectors;
 
 public class OutgoingEdgesDetector extends BaseDetector implements TopologyDetector {
-    @Override
-    public Map<String, Integer> detect(Graph<String, DefaultEdge> graph, Map<String, Object> params) {
-        int max_degree = getIntParam(params, "max_out_degree", 20);
-        Map<String, Integer> chatty = new HashMap<>();
 
-        for (String vertex : graph.vertexSet()) {
-            int outDegree = graph.outDegreeOf(vertex);
-            if (outDegree >= max_degree) {
-                chatty.put(vertex, outDegree);
-            }
+    @Override
+    public Map<String, List<List<String>>> detect(GraphData graphData, Map<String, Object> params) {
+        Graph<String, DefaultEdge> graph = graphData.getGraph();
+        int maxDegree = getIntParam(params, "max_out_degree", 20);
+        Map<String, List<List<String>>> result = new LinkedHashMap<>();
+
+        List<Map.Entry<String, Integer>> entries = graph.vertexSet().stream()
+            .map(vertex -> Map.entry(vertex, graph.outDegreeOf(vertex)))
+            .filter(entry -> entry.getValue() >= maxDegree)
+            .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
+            .collect(Collectors.toList());
+
+        int counter = 1;
+        for (Map.Entry<String, Integer> entry : entries) {
+            result.put(
+                "Outgoing-" + counter++,
+                Collections.singletonList(
+                    Arrays.asList(
+                        entry.getKey(), 
+                        String.valueOf(entry.getValue())
+                    )
+                )
+            );
         }
 
-        return chatty.entrySet().stream()
-            .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
-            .collect(Collectors.toMap(
-                Map.Entry::getKey,
-                Map.Entry::getValue,
-                (e1, e2) -> e1,
-                LinkedHashMap::new
-            ));
+        return result;
     }
 }

@@ -24,7 +24,7 @@ public class UniversalAntiPatternDetector {
             }
             
             Object detectionResult = detector.detect(
-                graphData.getGraph(), 
+                graphData, 
                 check.getParams()
             );
             

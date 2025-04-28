@@ -1,32 +1,39 @@
 package com.parser.analysis.detectors;
 
 import com.parser.analysis.TopologyDetector;
+import com.parser.model.GraphData;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
 import java.util.*;
-import java.util.stream.*;
-
+import java.util.stream.Collectors;
 
 public class HubDetector extends BaseDetector implements TopologyDetector {
+    
     @Override
-    public Map<String, Object> detect(Graph<String, DefaultEdge> graph, Map<String, Object> params) {
-        int max_degree = getIntParam(params, "max_degree", 10);
-        Map<String, Integer> hubs = new HashMap<>();
+    public Map<String, List<List<String>>> detect(GraphData graphData, Map<String, Object> params) {
+        Graph<String, DefaultEdge> graph = graphData.getGraph();
+        int maxDegree = getIntParam(params, "max_degree", 10);
+        Map<String, List<List<String>>> result = new LinkedHashMap<>();
 
-        for (String vertex : graph.vertexSet()) {
-            int degree = graph.inDegreeOf(vertex) + graph.outDegreeOf(vertex);
-            if (degree >= max_degree) {
-                hubs.put(vertex, degree);
-            }
+        List<Map.Entry<String, Integer>> hubs = graph.vertexSet().stream()
+            .map(vertex -> Map.entry(
+                vertex, 
+                graph.inDegreeOf(vertex) + graph.outDegreeOf(vertex)
+            ))
+            .filter(entry -> entry.getValue() >= maxDegree)
+            .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
+            .collect(Collectors.toList());
+
+        int counter = 1;
+        for (Map.Entry<String, Integer> entry : hubs) {
+            result.put("Hub " + counter++, Arrays.asList(
+                Arrays.asList(
+                    entry.getKey(), 
+                    String.valueOf(entry.getValue())
+                )
+            ));
         }
 
-        return hubs.entrySet().stream()
-            .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
-            .collect(Collectors.toMap(
-                Map.Entry::getKey,
-                Map.Entry::getValue,
-                (e1, e2) -> e1,
-                LinkedHashMap::new
-            ));
+        return result;
     }
 }
