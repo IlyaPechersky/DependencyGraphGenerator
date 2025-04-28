@@ -1,12 +1,8 @@
 {
   "architectureAnalysis": {
     "Cycles": [
-      [
-        "org.springframework.samples.petclinic.customers.model.Owner"
-      ],
-      [
-        "org.springframework.samples.petclinic.customers.model.Pet"
-      ]
+      "org.springframework.samples.petclinic.customers.model.Owner",
+      "org.springframework.samples.petclinic.customers.model.Pet"
     ],
     "God classes": {
       "org.springframework.samples.petclinic.api.application.WebClient.Builder": 0.01,
