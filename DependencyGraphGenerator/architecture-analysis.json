@@ -1,6 +1,6 @@
 {
   "architectureAnalysis": {
-    "Cycles": {
+    "Cycles, description: Наличие циклов в графе зависимостей. Формально: существует путь v1 → v2 → ... → vn → v1.": {
       "Cycle 1": [
         [
           "org.springframework.samples.petclinic.customers.model.Owner",
@@ -24,18 +24,18 @@
         ]
       ]
     },
-    "God classes": {
+    "God classes, description: Класс с аномально высоким PageRank. Формально: PR(v) \u003e threshold * max(PR), где PR — влияние через входящие связи.": {
       "org.springframework.samples.petclinic.api.application.WebClient.Builder": 0.01,
       "org.springframework.samples.petclinic.visits.model.Visit": 0.01,
       "org.springframework.samples.petclinic.api.boundary.web.ResponseEntity\u003cString\u003e": 0.01,
       "org.springframework.samples.petclinic.vets.web.VetRepository": 0.01
     },
-    "Bottlenecks": {
+    "Bottlenecks, description: Узел, через который проходит большинство кратчайших путей. Формально: C_B(v) \u003e threshold * max(C_B), где C_B — центральность по посредничеству.": {
       "org.springframework.samples.petclinic.api.application.VisitsServiceClient": 1,
       "org.springframework.samples.petclinic.customers.model.Owner": 1,
       "org.springframework.samples.petclinic.customers.model.Pet": 0.5
     },
-    "Service chains": {
+    "Service chains, description: Линейная цепочка зависимостей. Формально: путь v1 → v2 → ... → vn, где n \u003e max_length.": {
       "Chain--1948439031": [
         [
           "org.springframework.samples.petclinic.customers.model.Pet",
@@ -59,8 +59,8 @@
         ]
       ]
     },
-    "Hub-like dependency": {},
-    "Chatty services": {}
+    "Hub-like dependency, description: Узел с чрезмерным количеством связей. Формально: deg(v) \u003d in_degree(v) + out_degree(v) ≥ min_connections.": {},
+    "Chatty services, description: Сервис с чрезмерными исходящими зависимостями. Формально: out_degree(v) ≥ min_messages.": {}
   },
   "dependencyGraph": {
     "nodes": [
