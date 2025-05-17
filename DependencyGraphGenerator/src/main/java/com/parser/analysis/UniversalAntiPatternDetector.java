@@ -28,7 +28,8 @@ public class UniversalAntiPatternDetector {
                 check.getParams()
             );
             
-            results.put(check.getType(), detectionResult);
+            String key = check.getType() + ", description: " + check.getDescription();
+            results.put(key , detectionResult);
         }
         
         return results;
