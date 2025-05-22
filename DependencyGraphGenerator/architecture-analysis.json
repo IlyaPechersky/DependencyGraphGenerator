@@ -1,66 +1,32 @@
 {
   "architectureAnalysis": {
-    "Cycles, description: Наличие циклов в графе зависимостей. Формально: существует путь v1 → v2 → ... → vn → v1.": {
-      "Cycle 1": [
-        [
-          "org.springframework.samples.petclinic.customers.model.Owner",
-          "org.springframework.samples.petclinic.customers.model.Pet",
-          "method_parameter"
-        ],
-        [
-          "org.springframework.samples.petclinic.customers.model.Pet",
-          "org.springframework.samples.petclinic.customers.model.Owner",
-          "field"
-        ],
-        [
-          "org.springframework.samples.petclinic.customers.model.Pet",
-          "org.springframework.samples.petclinic.customers.model.Owner",
-          "method_return"
-        ],
-        [
-          "org.springframework.samples.petclinic.customers.model.Pet",
-          "org.springframework.samples.petclinic.customers.model.Owner",
-          "method_parameter"
-        ]
-      ]
-    },
-    "God classes, description: Класс с аномально высоким PageRank. Формально: PR(v) \u003e threshold * max(PR), где PR — влияние через входящие связи.": {
-      "org.springframework.samples.petclinic.api.application.WebClient.Builder": 0.01,
-      "org.springframework.samples.petclinic.visits.model.Visit": 0.01,
-      "org.springframework.samples.petclinic.api.boundary.web.ResponseEntity\u003cString\u003e": 0.01,
-      "org.springframework.samples.petclinic.vets.web.VetRepository": 0.01
-    },
-    "Bottlenecks, description: Узел, через который проходит большинство кратчайших путей. Формально: C_B(v) \u003e threshold * max(C_B), где C_B — центральность по посредничеству.": {
+    "cyclic_bottleneck": {
       "org.springframework.samples.petclinic.api.application.VisitsServiceClient": 1,
       "org.springframework.samples.petclinic.customers.model.Owner": 1,
       "org.springframework.samples.petclinic.customers.model.Pet": 0.5
     },
-    "Service chains, description: Линейная цепочка зависимостей. Формально: путь v1 → v2 → ... → vn, где n \u003e max_length.": {
-      "Chain--1948439031": [
-        [
-          "org.springframework.samples.petclinic.customers.model.Pet",
-          "org.springframework.samples.petclinic.customers.model.Owner",
-          "field"
-        ],
-        [
-          "org.springframework.samples.petclinic.customers.model.Owner",
-          "org.springframework.samples.petclinic.customers.model.Pet",
-          "method_parameter"
-        ],
-        [
-          "org.springframework.samples.petclinic.customers.model.Pet",
-          "org.springframework.samples.petclinic.customers.model.Owner",
-          "method_return"
-        ],
-        [
-          "org.springframework.samples.petclinic.customers.model.Owner",
-          "org.springframework.samples.petclinic.customers.model.Collection\u003c*\u003e",
-          "field"
+    "complex": {
+      "metric": {
+        "connectivity": 0.0
+      },
+      "topological": {
+        "Cycle 1": [
+          [
+            "org.springframework.samples.petclinic.customers.model.Owner",
+            "org.springframework.samples.petclinic.customers.model.Pet",
+            "method_parameter"
+          ],
+          [
+            "org.springframework.samples.petclinic.customers.model.Pet",
+            "org.springframework.samples.petclinic.customers.model.Owner",
+            "field"
+          ]
         ]
-      ]
+      }
     },
-    "Hub-like dependency, description: Узел с чрезмерным количеством связей. Формально: deg(v) \u003d in_degree(v) + out_degree(v) ≥ min_connections.": {},
-    "Chatty services, description: Сервис с чрезмерными исходящими зависимостями. Формально: out_degree(v) ≥ min_messages.": {}
+    "overgrown_tree": {
+      "connectivity": 0.0
+    }
   },
   "dependencyGraph": {
     "nodes": [
@@ -769,11 +735,6 @@
       {
         "source": "org.springframework.samples.petclinic.vets.model.Vet",
         "type": "method_return",
-        "target": "org.springframework.samples.petclinic.vets.model.Set\u003cSpecialty\u003e"
-      },
-      {
-        "source": "org.springframework.samples.petclinic.vets.model.Vet",
-        "type": "method_return",
         "target": "org.springframework.samples.petclinic.vets.model.List\u003cSpecialty\u003e"
       },
       {
@@ -983,42 +944,12 @@
       },
       {
         "source": "org.springframework.samples.petclinic.customers.web.PetResource",
-        "type": "method_parameter",
-        "target": "org.springframework.samples.petclinic.customers.web.PetRequest"
-      },
-      {
-        "source": "org.springframework.samples.petclinic.customers.web.PetResource",
-        "type": "method_return",
-        "target": "org.springframework.samples.petclinic.customers.web.Pet"
-      },
-      {
-        "source": "org.springframework.samples.petclinic.customers.web.PetResource",
-        "type": "method_parameter",
-        "target": "org.springframework.samples.petclinic.customers.web.Pet"
-      },
-      {
-        "source": "org.springframework.samples.petclinic.customers.web.PetResource",
-        "type": "method_parameter",
-        "target": "org.springframework.samples.petclinic.customers.web.PetRequest"
-      },
-      {
-        "source": "org.springframework.samples.petclinic.customers.web.PetResource",
         "type": "method_return",
         "target": "org.springframework.samples.petclinic.customers.web.PetDetails"
       },
       {
-        "source": "org.springframework.samples.petclinic.customers.web.PetResource",
-        "type": "method_return",
-        "target": "org.springframework.samples.petclinic.customers.web.Pet"
-      },
-      {
         "source": "org.springframework.samples.petclinic.customers.web.mapper.OwnerEntityMapper",
         "type": "method_return",
-        "target": "org.springframework.samples.petclinic.customers.web.mapper.Owner"
-      },
-      {
-        "source": "org.springframework.samples.petclinic.customers.web.mapper.OwnerEntityMapper",
-        "type": "method_parameter",
         "target": "org.springframework.samples.petclinic.customers.web.mapper.Owner"
       },
       {
@@ -1062,11 +993,6 @@
         "target": "org.springframework.samples.petclinic.customers.web.List\u003cOwner\u003e"
       },
       {
-        "source": "org.springframework.samples.petclinic.customers.web.OwnerResource",
-        "type": "method_parameter",
-        "target": "org.springframework.samples.petclinic.customers.web.OwnerRequest"
-      },
-      {
         "source": "org.springframework.samples.petclinic.customers.model.Pet",
         "type": "field",
         "target": "org.springframework.samples.petclinic.customers.model.PetType"
@@ -1074,36 +1000,11 @@
       {
         "source": "org.springframework.samples.petclinic.customers.model.Pet",
         "type": "field",
-        "target": "org.springframework.samples.petclinic.customers.model.Owner"
-      },
-      {
-        "source": "org.springframework.samples.petclinic.customers.model.Pet",
-        "type": "method_return",
-        "target": "org.springframework.samples.petclinic.customers.model.PetType"
-      },
-      {
-        "source": "org.springframework.samples.petclinic.customers.model.Pet",
-        "type": "method_return",
-        "target": "org.springframework.samples.petclinic.customers.model.Owner"
-      },
-      {
-        "source": "org.springframework.samples.petclinic.customers.model.Pet",
-        "type": "method_parameter",
-        "target": "org.springframework.samples.petclinic.customers.model.PetType"
-      },
-      {
-        "source": "org.springframework.samples.petclinic.customers.model.Pet",
-        "type": "method_parameter",
         "target": "org.springframework.samples.petclinic.customers.model.Owner"
       },
       {
         "source": "org.springframework.samples.petclinic.customers.model.Owner",
         "type": "field",
-        "target": "org.springframework.samples.petclinic.customers.model.Set\u003cPet\u003e"
-      },
-      {
-        "source": "org.springframework.samples.petclinic.customers.model.Owner",
-        "type": "method_return",
         "target": "org.springframework.samples.petclinic.customers.model.Set\u003cPet\u003e"
       },
       {

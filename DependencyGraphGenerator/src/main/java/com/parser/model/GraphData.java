@@ -33,7 +33,8 @@ public class GraphData {
     }
 
     public void addEdge(String source, String target, String edgeType) {
-        if (source.equals(target) || !isProjectClass(source) || !isProjectClass(target)) {
+        if (!isProjectClass(source) || !isProjectClass(target) ||
+            source.equals(target) || graph.containsEdge(source, target)) {
             return;
         }
         if (!graph.containsVertex(source) || !graph.containsVertex(target)) {
@@ -48,6 +49,17 @@ public class GraphData {
     private boolean isProjectClass(String className) {
         return className.startsWith(projectPackagePrefix) 
             && !className.matches("^(java|javax|sun|com.sun).*");
+    }
+
+    public boolean containsAllEdges(List<List<String>> edges) {
+        return edges.stream().allMatch(e -> 
+            graph.getAllEdges(e.get(0), e.get(1)).stream()
+                .anyMatch(edge -> getEdgeTypes().get(edge).equals(e.get(2)))
+        );
+    }
+
+    public boolean isDirected() {
+        return graph.getType().isDirected();
     }
 
     public Map<String, Object> toJson() {

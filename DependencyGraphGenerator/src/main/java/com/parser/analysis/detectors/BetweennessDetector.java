@@ -1,6 +1,6 @@
 package com.parser.analysis.detectors;
 
-import com.parser.analysis.TopologyDetector;
+import com.parser.analysis.MetricsDetector;
 import com.parser.model.GraphData;
 import org.jgrapht.Graph;
 import org.jgrapht.alg.scoring.BetweennessCentrality;
@@ -8,9 +8,9 @@ import org.jgrapht.graph.DefaultEdge;
 import java.util.*;
 
 
-public class BetweennessDetector extends BaseDetector implements TopologyDetector {
+public class BetweennessDetector implements MetricsDetector {
     @Override
-    public Map<String, Double> detect(GraphData graphData, Map<String, Object> params) {
+    public Map<String, Double> detectMetrics(GraphData graphData, Map<String, Object> params) {
         // double threshold = (double) params.getOrDefault("threshold", 0.1);
         Graph<String, DefaultEdge> graph = graphData.getGraph();
         double threshold = 0.15;
