@@ -1,4 +1,3 @@
-// StarDetector.java
 package com.parser.analysis.detectors;
 
 import com.parser.analysis.TopologyDetector;
@@ -20,10 +19,8 @@ public class StarDetector extends BaseDetector implements TopologyDetector {
         Set<String> processedCenters = new HashSet<>();
 
         for (String center : graph.vertexSet()) {
-            // Собираем все связи центра
             Map<String, List<DefaultEdge>> rays = new HashMap<>();
             
-            // Анализ исходящих и входящих ребер
             if (direction.equals("out") || direction.equals("any")) {
                 graph.outgoingEdgesOf(center).forEach(e -> {
                     String target = graph.getEdgeTarget(e);
@@ -38,16 +35,13 @@ public class StarDetector extends BaseDetector implements TopologyDetector {
                 });
             }
 
-            // Фильтрация по минимальному количеству лучей
             for (Map.Entry<String, List<DefaultEdge>> entry : rays.entrySet()) {
                 String peripheral = entry.getKey();
                 List<DefaultEdge> edges = entry.getValue();
                 
                 if (edges.size() >= minRays) {
-                    // Проверка на чистоту звезды
                     if (checkPurity && !isPureStar(graph, center, peripheral, edges)) continue;
                     
-                    // Генерация уникального ключа
                     String starKey = generateStarKey(center, edges, graphData);
                     if (!processedCenters.contains(starKey)) {
                         processedCenters.add(starKey);
@@ -64,7 +58,6 @@ public class StarDetector extends BaseDetector implements TopologyDetector {
                               String center, 
                               String peripheral,
                               List<DefaultEdge> edges) {
-        // Проверка, что периферийные узлы не связаны между собой
         Set<String> peripherals = new HashSet<>();
         edges.forEach(e -> {
             if (graph.getEdgeSource(e).equals(center)) {
@@ -87,7 +80,6 @@ public class StarDetector extends BaseDetector implements TopologyDetector {
     private String generateStarKey(String center, 
                                   List<DefaultEdge> edges, 
                                   GraphData graphData) {
-        // Уникальный ключ на основе типов ребер и направления
         List<String> edgeTypes = new ArrayList<>();
         for (DefaultEdge e : edges) {
             String type = graphData.getEdgeTypes().getOrDefault(e, "unknown");

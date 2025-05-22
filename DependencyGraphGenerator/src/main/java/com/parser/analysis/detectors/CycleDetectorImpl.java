@@ -12,22 +12,26 @@ public class CycleDetectorImpl extends BaseDetector implements TopologyDetector 
 
     @Override
     public Map<String, List<List<String>>> detect(GraphData graphData, Map<String, Object> params) {
+        int minLength = getIntParam(params, "min_length", 3);
+        int maxLength = getIntParam(params, "max_length", 6);
         Graph<String, DefaultEdge> graph = graphData.getGraph();
+        
         TarjanSimpleCycles<String, DefaultEdge> cycleFinder = new TarjanSimpleCycles<>(graph);
         Map<String, List<List<String>>> result = new LinkedHashMap<>();
-        Set<Set<String>> uniqueCycles = new HashSet<>(); // Для отслеживания уникальности
+        Set<Set<String>> uniqueCycles = new HashSet<>();
 
         List<List<String>> vertexCycles = cycleFinder.findSimpleCycles();
         int cycleNumber = 1;
 
         for (List<String> vertexCycle : vertexCycles) {
-            // Нормализуем порядок вершин для устранения дубликатов
+            // if (vertexCycle.size() < minLength || vertexCycle.size() > maxLength) continue;
+
             Set<String> cycleSet = new LinkedHashSet<>(vertexCycle);
             if (cycleSet.size() < 2 || uniqueCycles.contains(cycleSet)) continue;
             uniqueCycles.add(cycleSet);
 
             List<List<String>> edges = new ArrayList<>();
-            Map<String, Set<String>> edgeTypesMap = new HashMap<>(); // Группировка типов
+            Map<String, Set<String>> edgeTypesMap = new HashMap<>();
 
             for (int i = 0; i < vertexCycle.size(); i++) {
                 String source = vertexCycle.get(i);
