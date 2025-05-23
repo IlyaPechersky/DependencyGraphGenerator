@@ -1,6 +1,6 @@
 {
     "anti_patterns": {
-      "complex": {
+      "strong_connected_cycles": {
         "description": "Комбинированный анализ",
         "conditions": {
           "operator": "AND",
@@ -12,6 +12,24 @@
             {
               "type": "metric",
               "metric": "connectivity",
+              "operator": ">",
+              "value": 0.0
+            }
+          ]
+        }
+      },
+      "cycles_with_cut_points": {
+        "description": "Циклы с центральными узлами",
+        "conditions": {
+          "operator": "AND",
+          "rules": [
+            {
+              "type": "topology",
+              "detector": "cycle"
+            },
+            {
+              "type": "metric",
+              "metric": "betweenness",
               "operator": ">",
               "value": 0.0
             }
