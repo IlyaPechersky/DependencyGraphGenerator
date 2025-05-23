@@ -1,11 +1,6 @@
 {
   "architectureAnalysis": {
-    "cyclic_bottleneck": {
-      "org.springframework.samples.petclinic.api.application.VisitsServiceClient": 1,
-      "org.springframework.samples.petclinic.customers.model.Owner": 1,
-      "org.springframework.samples.petclinic.customers.model.Pet": 0.5
-    },
-    "complex": {
+    "strong_connected_cycles": {
       "metric": {
         "connectivity": 0.0
       },
@@ -24,8 +19,50 @@
         ]
       }
     },
+    "cyclic_bottleneck": {
+      "metric": {
+        "org.springframework.samples.petclinic.api.application.VisitsServiceClient": 1,
+        "org.springframework.samples.petclinic.customers.model.Owner": 1,
+        "org.springframework.samples.petclinic.customers.model.Pet": 0.5
+      },
+      "topological": {
+        "Cycle 1": [
+          [
+            "org.springframework.samples.petclinic.customers.model.Owner",
+            "org.springframework.samples.petclinic.customers.model.Pet",
+            "method_parameter"
+          ],
+          [
+            "org.springframework.samples.petclinic.customers.model.Pet",
+            "org.springframework.samples.petclinic.customers.model.Owner",
+            "field"
+          ]
+        ]
+      }
+    },
     "overgrown_tree": {
       "connectivity": 0.0
+    },
+    "cycles_with_cut_points": {
+      "metric": {
+        "org.springframework.samples.petclinic.api.application.VisitsServiceClient": 1,
+        "org.springframework.samples.petclinic.customers.model.Owner": 1,
+        "org.springframework.samples.petclinic.customers.model.Pet": 0.5
+      },
+      "topological": {
+        "Cycle 1": [
+          [
+            "org.springframework.samples.petclinic.customers.model.Owner",
+            "org.springframework.samples.petclinic.customers.model.Pet",
+            "method_parameter"
+          ],
+          [
+            "org.springframework.samples.petclinic.customers.model.Pet",
+            "org.springframework.samples.petclinic.customers.model.Owner",
+            "field"
+          ]
+        ]
+      }
     }
   },
   "dependencyGraph": {

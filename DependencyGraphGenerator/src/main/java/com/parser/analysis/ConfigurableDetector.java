@@ -149,33 +149,55 @@ public class ConfigurableDetector implements TopologyDetector, MetricsDetector {
     private boolean checkMetricRule(GraphData graphData, Rule rule) {
         String metricName = rule.getMetric();
         if (metricName == null) {
-            System.err.println("Metric name is not specified");
+            System.err.println("Metric name is not specified in rule: " + rule);
             return false;
         }
 
         MetricsDetector detector = DetectorFactory.getMetricDetector(metricName);
         if (detector == null) {
-            System.err.println("Metric detector not found: " + metricName);
+            System.err.println("Metric detector not found for metric name: " + metricName);
             return false;
         }
 
         Map<String, Object> params = rule.getParams() != null ? 
             rule.getParams() : Collections.emptyMap();
 
+        Map<String, Double> detectedMetrics;
         try {
-            Map<String, Double> metrics = detector.detectMetrics(graphData, params);
-            Double value = metrics.get(metricName);
-            
+            detectedMetrics = detector.detectMetrics(graphData, params);
+        } catch (Exception e) {
+            System.err.println("Metric calculation failed for '" + metricName + "': " + e.getMessage());
+            e.printStackTrace(); // It's useful to see the stack trace for such errors
+            return false;
+        }
+
+        if (detectedMetrics == null) {
+            System.err.println("Metric detector for '" + metricName + "' returned a null map.");
+            return false;
+        }
+
+        // Handle known per-node metrics by checking if *any* node satisfies the condition
+        // Add other per-node metric names here as needed.
+        if (metricName.equals("pagerank") || metricName.equals("betweenness")) { 
+            if (detectedMetrics.isEmpty()) {
+                // If the detector returns no nodes (e.g., due to internal filtering like PageRank's threshold),
+                // then no node can satisfy the condition.
+                return false; 
+            }
+            for (Double nodeScore : detectedMetrics.values()) {
+                if (checkCondition(nodeScore, rule.getOperator(), rule.getValue())) {
+                    return true; // Condition met for at least one node
+                }
+            }
+            return false; // Condition not met for any node
+        } else {
+            // For other metrics, expect a single value keyed by metricName
+            Double value = detectedMetrics.get(metricName);
             if (value == null) {
-                System.err.println("Metric not calculated: " + metricName);
+                System.err.println("Metric '" + metricName + "' not found in results from its detector (" + detector.getClass().getSimpleName() + "). Available keys: " + detectedMetrics.keySet());
                 return false;
             }
-
             return checkCondition(value, rule.getOperator(), rule.getValue());
-            
-        } catch (Exception e) {
-            System.err.println("Metric calculation failed: " + e.getMessage());
-            return false;
         }
     }
 
