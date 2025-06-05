@@ -22,11 +22,15 @@ public class ConfigurableDetector implements TopologyDetector, MetricsDetector {
         Map<String, List<List<String>>> result = new LinkedHashMap<>();
         
         if (evaluateConditions(graphData, definition.getConditions())) {
-            List<TopologyDetector> detectors = resolveDetectors(definition.getConditions());
-            detectors.forEach(detector -> {
-                Map<String, List<List<String>>> findings = detector.detect(graphData, params);
+            List<Map.Entry<TopologyDetector, Map<String, Object>>> resolvedDetectors = resolveDetectorsWithParams(definition.getConditions());
+            
+            resolvedDetectors.forEach(entry -> {
+                TopologyDetector detector = entry.getKey();
+                Map<String, Object> ruleParams = entry.getValue();
+                
+                Map<String, List<List<String>>> findings = detector.detect(graphData, ruleParams);
                 findings.forEach((key, edges) -> {
-                    result.computeIfAbsent(key, k -> new ArrayList<>()).addAll(edges);
+                    result.computeIfAbsent(definition.getDescription() + " (" + key + ")", k -> new ArrayList<>()).addAll(edges);
                 });
             });
         }
@@ -65,6 +69,21 @@ public class ConfigurableDetector implements TopologyDetector, MetricsDetector {
         }
         
         return result;
+    }
+
+    private List<Map.Entry<TopologyDetector, Map<String, Object>>> resolveDetectorsWithParams(RuleConditions conditions) {
+        return conditions.getRules().stream()
+            .filter(rule -> "topology".equals(rule.getType()))
+            .map(rule -> {
+                TopologyDetector detector = DetectorFactory.getTopologyDetector(rule.getDetector());
+                if (detector != null) {
+                    Map<String, Object> params = rule.getParams() != null ? rule.getParams() : Collections.<String, Object>emptyMap();
+                    return new AbstractMap.SimpleEntry<TopologyDetector, Map<String, Object>>(detector, params);
+                }
+                return null;
+            })
+            .filter(Objects::nonNull)
+            .collect(Collectors.toList());
     }
 
     private List<TopologyDetector> resolveDetectors(RuleConditions conditions) {
@@ -126,7 +145,10 @@ public class ConfigurableDetector implements TopologyDetector, MetricsDetector {
         }
         
         TopologyDetector detector = DetectorFactory.getTopologyDetector(rule.getDetector());
-        if (detector == null) return Collections.emptyMap();
+        if (detector == null) {
+             System.err.println("Topology detector not found: " + detectorName);
+             return Collections.emptyMap();
+        }
         
         Map<String, List<List<String>>> findings = detector.detect(
             graphData, 

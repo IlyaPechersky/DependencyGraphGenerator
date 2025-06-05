@@ -3,59 +3,56 @@ package com.parser.analysis.detectors;
 import com.parser.analysis.TopologyDetector;
 import com.parser.model.GraphData;
 import org.jgrapht.Graph;
+import org.jgrapht.alg.connectivity.ConnectivityInspector;
+import org.jgrapht.alg.cycle.CycleDetector;
 import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.AsSubgraph;
 import java.util.*;
 
 public class TreeDetector extends BaseDetector implements TopologyDetector {
 
     @Override
     public Map<String, List<List<String>>> detect(GraphData graphData, Map<String, Object> params) {
-        Graph<String, DefaultEdge> graph = graphData.getGraph();
+        List<String> allowedEdgeTypes = getListStringParam(params, "allowed_edge_types");
+        Graph<String, DefaultEdge> graphToAnalyze;
+
+        if (allowedEdgeTypes != null && !allowedEdgeTypes.isEmpty()) {
+            graphToAnalyze = buildFilteredGraph(graphData, allowedEdgeTypes);
+        } else {
+            graphToAnalyze = graphData.getGraph();
+        }
+
         int minNodes = getIntParam(params, "min_nodes", 3);
+        Map<String, List<List<String>>> detectedTrees = new LinkedHashMap<>();
 
-        Map<String, List<List<String>>> trees = new LinkedHashMap<>();
-        Set<String> visited = new HashSet<>();
+        ConnectivityInspector<String, DefaultEdge> inspector = new ConnectivityInspector<>(graphToAnalyze);
+        List<Set<String>> connectedComponents = inspector.connectedSets();
+        int treeNumber = 1;
 
-        for (String root : graph.vertexSet()) {
-            if (!visited.contains(root)) {
-                List<List<String>> treeEdges = new ArrayList<>();
-                Set<String> treeNodes = new HashSet<>();
-                boolean isTree = traverseTree(root, null, graph, treeEdges, treeNodes, visited, graphData);
+        for (Set<String> componentNodes : connectedComponents) {
+            if (componentNodes.size() < minNodes) continue;
 
-                if (isTree && treeNodes.size() >= minNodes) {
-                    trees.put("Tree (Root: " + root + ")", treeEdges);
-                    visited.addAll(treeNodes);
+            Graph<String, DefaultEdge> componentGraph = new AsSubgraph<>(graphToAnalyze, componentNodes);
+            
+            org.jgrapht.alg.cycle.CycleDetector<String, DefaultEdge> componentCycleDetector = 
+                new org.jgrapht.alg.cycle.CycleDetector<>(componentGraph);
+            
+            if (!componentCycleDetector.detectCycles()) {
+                if (componentGraph.edgeSet().size() == componentNodes.size() - 1 || componentNodes.size() == 1 && componentGraph.edgeSet().isEmpty()) { 
+                    List<List<String>> treeEdgesReport = new ArrayList<>();
+                    for (DefaultEdge edge : componentGraph.edgeSet()) {
+                        String source = componentGraph.getEdgeSource(edge);
+                        String target = componentGraph.getEdgeTarget(edge);
+                        String originalEdgeType = graphData.getEdgeTypes().getOrDefault(edge, "unknown");
+                        treeEdgesReport.add(Arrays.asList(source, target, originalEdgeType));
+                    }
+                    if (!treeEdgesReport.isEmpty() || componentNodes.size() >= minNodes && componentNodes.size() == 1) {
+                        String rootCandidate = componentNodes.stream().findFirst().orElse("UnknownRoot");
+                        detectedTrees.put("Tree-" + treeNumber++ + " (Rootish: " + rootCandidate + ")", treeEdgesReport);
+                    }
                 }
             }
         }
-
-        return trees;
-    }
-
-    private boolean traverseTree(String current,
-                                String parent,
-                                Graph<String, DefaultEdge> graph,
-                                List<List<String>> treeEdges,
-                                Set<String> treeNodes,
-                                Set<String> globalVisited,
-                                GraphData graphData) {
-        if (treeNodes.contains(current)) return false;
-        treeNodes.add(current);
-
-        boolean isValidTree = true;
-        for (DefaultEdge edge : graph.outgoingEdgesOf(current)) {
-            String child = graph.getEdgeTarget(edge);
-            if (child.equals(parent)) continue;
-
-            if (!traverseTree(child, current, graph, treeEdges, treeNodes, globalVisited, graphData)) {
-                isValidTree = false;
-            } else {
-                String type = graphData.getEdgeTypes().getOrDefault(edge, "unknown");
-                treeEdges.add(Arrays.asList(current, child, type));
-            }
-        }
-
-        globalVisited.add(current);
-        return isValidTree;
+        return detectedTrees;
     }
 }

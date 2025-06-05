@@ -1,14 +1,13 @@
 package com.parser.visitors;
 
-import com.parser.model.GraphData;
 import com.github.javaparser.ast.body.EnumDeclaration;
-import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
+import com.github.javaparser.ast.type.Type;
+import com.parser.model.GraphData;
+import com.github.javaparser.symbolsolver.JavaSymbolSolver;
 
-public class EnumVisitor extends VoidVisitorAdapter<Void> {
-    private final GraphData graphData;
-
-    public EnumVisitor(GraphData graphData) {
-        this.graphData = graphData;
+public class EnumVisitor extends BaseVisitor {
+    public EnumVisitor(GraphData graphData, JavaSymbolSolver symbolSolver) {
+        super(graphData, symbolSolver);
     }
 
     @Override
@@ -18,7 +17,7 @@ public class EnumVisitor extends VoidVisitorAdapter<Void> {
 
         // Реализация интерфейсов (implements)
         n.getImplementedTypes().forEach(type -> {
-            String interfaceName = type.getNameAsString();
+            String interfaceName = resolveFullTypeName(type);
             graphData.addNode(interfaceName, "interface");
             graphData.addEdge(enumName, interfaceName, "implements");
         });
