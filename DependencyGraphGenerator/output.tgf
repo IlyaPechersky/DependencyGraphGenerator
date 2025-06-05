@@ -1,0 +1,46 @@
+1913257909 com.parser:DependencyGraphGenerator:jar:1.0-SNAPSHOT
+99195804 org.jgrapht:jgrapht-core:jar:1.5.2:compile
+803685654 org.jheaps:jheaps:jar:0.14:compile
+2111669429 org.apfloat:apfloat:jar:1.10.1:compile
+1940844413 org.jgrapht:jgrapht-ext:jar:1.5.2:compile
+224878495 com.github.vlsi.mxgraph:jgraphx:jar:4.2.2:compile
+1487884406 com.github.javaparser:javaparser-core:jar:3.25.9:compile
+1229365242 com.github.javaparser:javaparser-symbol-solver-core:jar:3.25.9:compile
+1301763240 org.javassist:javassist:jar:3.30.2-GA:compile
+2050715938 com.fasterxml.jackson.core:jackson-databind:jar:2.15.2:compile
+1488298739 com.fasterxml.jackson.core:jackson-annotations:jar:2.15.2:compile
+636575568 com.fasterxml.jackson.core:jackson-core:jar:2.15.2:compile
+1387556178 com.google.code.gson:gson:jar:2.10.1:compile
+1931977799 org.apache.commons:commons-collections4:jar:4.4:compile
+108012266 com.google.guava:guava:jar:31.1-jre:compile
+693434027 com.google.guava:failureaccess:jar:1.0.1:compile
+1492897838 com.google.guava:listenablefuture:jar:9999.0-empty-to-avoid-conflict-with-guava:compile
+372261610 com.google.code.findbugs:jsr305:jar:3.0.2:compile
+298862004 org.checkerframework:checker-qual:jar:3.12.0:compile
+532613259 com.google.errorprone:error_prone_annotations:jar:2.11.0:compile
+423870962 com.google.j2objc:j2objc-annotations:jar:1.3:compile
+225507106 junit:junit:jar:4.13.2:test
+505343709 org.hamcrest:hamcrest-core:jar:1.3:test
+#
+99195804 803685654 compile
+99195804 2111669429 compile
+1913257909 99195804 compile
+1940844413 224878495 compile
+1913257909 1940844413 compile
+1913257909 1487884406 compile
+1229365242 1301763240 compile
+1913257909 1229365242 compile
+2050715938 1488298739 compile
+2050715938 636575568 compile
+1913257909 2050715938 compile
+1913257909 1387556178 compile
+1913257909 1931977799 compile
+108012266 693434027 compile
+108012266 1492897838 compile
+108012266 372261610 compile
+108012266 298862004 compile
+108012266 532613259 compile
+108012266 423870962 compile
+1913257909 108012266 compile
+225507106 505343709 test
+1913257909 225507106 test

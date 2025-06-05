@@ -5,107 +5,85 @@ import com.parser.model.GraphData;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class StarDetector extends BaseDetector implements TopologyDetector {
 
     @Override
     public Map<String, List<List<String>>> detect(GraphData graphData, Map<String, Object> params) {
-        Graph<String, DefaultEdge> graph = graphData.getGraph();
+        List<String> allowedEdgeTypes = getListStringParam(params, "allowed_edge_types");
+        Graph<String, DefaultEdge> graphToAnalyze;
+
+        if (allowedEdgeTypes != null && !allowedEdgeTypes.isEmpty()) {
+            graphToAnalyze = buildFilteredGraph(graphData, allowedEdgeTypes);
+        } else {
+            graphToAnalyze = graphData.getGraph();
+        }
+
         int minRays = getIntParam(params, "min_rays", 3);
-        boolean checkPurity = getBoolParam(params, "check_purity", true);
-        String direction = getStringParam(params, "direction", "any");
+        String directionParam = getStringParam(params, "direction", "any").toLowerCase();
         
-        Map<String, List<List<String>>> stars = new LinkedHashMap<>();
-        Set<String> processedCenters = new HashSet<>();
+        Map<String, List<List<String>>> detectedStars = new LinkedHashMap<>();
 
-        for (String center : graph.vertexSet()) {
-            Map<String, List<DefaultEdge>> rays = new HashMap<>();
-            
-            if (direction.equals("out") || direction.equals("any")) {
-                graph.outgoingEdgesOf(center).forEach(e -> {
-                    String target = graph.getEdgeTarget(e);
-                    rays.computeIfAbsent(target, k -> new ArrayList<>()).add(e);
-                });
+        for (String potentialCenter : graphToAnalyze.vertexSet()) {
+            List<DefaultEdge> incidentEdges = new ArrayList<>();
+            if (directionParam.equals("out") || directionParam.equals("any")) {
+                incidentEdges.addAll(graphToAnalyze.outgoingEdgesOf(potentialCenter));
             }
-            
-            if (direction.equals("in") || direction.equals("any")) {
-                graph.incomingEdgesOf(center).forEach(e -> {
-                    String source = graph.getEdgeSource(e);
-                    rays.computeIfAbsent(source, k -> new ArrayList<>()).add(e);
-                });
+            if (directionParam.equals("in") || directionParam.equals("any")) {
+                if (directionParam.equals("in") || (directionParam.equals("any") && graphToAnalyze.getType().isDirected())) {
+                    incidentEdges.addAll(graphToAnalyze.incomingEdgesOf(potentialCenter));
+                }
             }
+            List<DefaultEdge> distinctIncidentEdges = incidentEdges.stream().distinct().collect(Collectors.toList());
 
-            for (Map.Entry<String, List<DefaultEdge>> entry : rays.entrySet()) {
-                String peripheral = entry.getKey();
-                List<DefaultEdge> edges = entry.getValue();
-                
-                if (edges.size() >= minRays) {
-                    if (checkPurity && !isPureStar(graph, center, peripheral, edges)) continue;
+            if (distinctIncidentEdges.size() >= minRays) {
+                List<List<String>> starEdgesReport = new ArrayList<>();
+                Set<String> peripherals = new HashSet<>();
+
+                for (DefaultEdge edge : distinctIncidentEdges) {
+                    String source = graphToAnalyze.getEdgeSource(edge);
+                    String target = graphToAnalyze.getEdgeTarget(edge);
+                    String originalEdgeType = graphData.getEdgeTypes().getOrDefault(edge, "unknown");
                     
-                    String starKey = generateStarKey(center, edges, graphData);
-                    if (!processedCenters.contains(starKey)) {
-                        processedCenters.add(starKey);
-                        addStarStructure(stars, center, peripheral, edges, graphData);
+                    starEdgesReport.add(Arrays.asList(source, target, originalEdgeType));
+                    if (source.equals(potentialCenter)) peripherals.add(target);
+                    else peripherals.add(source);
+                }
+
+                if (!starEdgesReport.isEmpty()) {
+                    detectedStars.put("Star-" + potentialCenter, starEdgesReport);
+                }
+            }
+        }
+        return detectedStars;
+    }
+
+    private boolean isPureStarConfiguration(Graph<String, DefaultEdge> graph, String center, List<DefaultEdge> rays) {
+        Set<String> peripheralNodes = new HashSet<>();
+        for (DefaultEdge ray : rays) {
+            String source = graph.getEdgeSource(ray);
+            String target = graph.getEdgeTarget(ray);
+            if (source.equals(center)) {
+                peripheralNodes.add(target);
+            } else if (target.equals(center)) {
+                peripheralNodes.add(source);
+            } else {
+                return false; 
+            }
+        }
+
+        if (peripheralNodes.size() < 2) return true;
+
+        for (String p1 : peripheralNodes) {
+            for (String p2 : peripheralNodes) {
+                if (!p1.equals(p2)) {
+                    if (graph.containsEdge(p1, p2) || graph.containsEdge(p2, p1)) {
+                        return false;
                     }
                 }
             }
         }
-        
-        return stars;
-    }
-
-    private boolean isPureStar(Graph<String, DefaultEdge> graph, 
-                              String center, 
-                              String peripheral,
-                              List<DefaultEdge> edges) {
-        Set<String> peripherals = new HashSet<>();
-        edges.forEach(e -> {
-            if (graph.getEdgeSource(e).equals(center)) {
-                peripherals.add(graph.getEdgeTarget(e));
-            } else {
-                peripherals.add(graph.getEdgeSource(e));
-            }
-        });
-        
-        for (String p1 : peripherals) {
-            for (String p2 : peripherals) {
-                if (!p1.equals(p2) && graph.containsEdge(p1, p2)) {
-                    return false;
-                }
-            }
-        }
         return true;
-    }
-
-    private String generateStarKey(String center, 
-                                  List<DefaultEdge> edges, 
-                                  GraphData graphData) {
-        List<String> edgeTypes = new ArrayList<>();
-        for (DefaultEdge e : edges) {
-            String type = graphData.getEdgeTypes().getOrDefault(e, "unknown");
-            String direction = graphData.getGraph().getEdgeSource(e).equals(center) 
-                ? "out" : "in";
-            edgeTypes.add(direction + ":" + type);
-        }
-        Collections.sort(edgeTypes);
-        return center + "|" + String.join(",", edgeTypes);
-    }
-
-    private void addStarStructure(Map<String, List<List<String>>> stars,
-                                  String center,
-                                  String peripheral,
-                                  List<DefaultEdge> edges,
-                                  GraphData graphData) {
-        List<List<String>> starEdges = new ArrayList<>();
-        
-        for (DefaultEdge edge : edges) {
-            String source = graphData.getGraph().getEdgeSource(edge);
-            String target = graphData.getGraph().getEdgeTarget(edge);
-            String type = graphData.getEdgeTypes().getOrDefault(edge, "unknown");
-            
-            starEdges.add(Arrays.asList(source, target, type));
-        }
-        
-        stars.put("Star [" + center + "]", starEdges);
     }
 }

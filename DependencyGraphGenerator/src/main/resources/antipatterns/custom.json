@@ -25,7 +25,10 @@
           "rules": [
             {
               "type": "topology",
-              "detector": "cycle"
+              "detector": "cycle",
+              "params": {
+                "allowed_edge_types": ["field", "method_parameter"]
+              }
             },
             {
               "type": "metric",
@@ -43,7 +46,10 @@
           "rules": [
             {
               "type": "topology",
-              "detector": "cycle"
+              "detector": "cycle",
+              "params": {
+                "allowed_edge_types": ["field", "method_parameter"]
+              }
             },
             {
               "type": "metric",
@@ -61,7 +67,10 @@
           "rules": [
             {
               "type": "topology",
-              "detector": "tree"
+              "detector": "tree",
+              "params": {
+                "allowed_edge_types": ["field", "method_parameter"]
+              }
             },
             {
               "type": "metric",
